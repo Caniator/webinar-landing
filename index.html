@@ -449,7 +449,10 @@ function Nav({ onRegister }) {
 function Hero({ onRegister, patternOpacity = 70, showVideo = false }) {
   const patternAlpha = Math.max(0, Math.min(0.22, (patternOpacity / 100) * 0.22));
   return (
-    <section id="top" className="relative overflow-hidden bg-ae-dark-blue text-white">
+    <section id="top" className="relative overflow-hidden bg-ae-dark-blue text-white"
+      style={{ backgroundImage: "url('assets/photos/tower-interior.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      {/* Dark blue semi-transparent overlay */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ backgroundColor: 'rgba(13,35,65,0.82)' }} />
       {/* Blueprint texture */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0"
         style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: patternAlpha }} />
@@ -663,7 +666,49 @@ function Agenda() {
     { t: '15 min', title: 'Live Q&A with Andis and Nauris',  body: 'Bring questions on fleet inspections, defect tracking, or planning.' }
   ];
   return (
-    <section id="agenda" className="bg-ae-ink-50">
+    <section id="agenda" className="relative overflow-hidden bg-ae-ink-50">
+      {/* Wind farm silhouette — decorative right-side pattern */}
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        className="pointer-events-none absolute inset-y-0 right-0 h-full"
+        style={{ width: '58%', opacity: 0.08, maskImage: 'linear-gradient(to right, transparent 0%, black 40%)', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)' }}
+        viewBox="0 0 700 750" preserveAspectRatio="xMidYMax meet">
+        <g fill="#1C67A1">
+          {/* Turbine 1 – large, foreground */}
+          <path d="M 491 750 L 497 378 L 503 378 L 509 750 Z"/>
+          <g transform="translate(500,376) rotate(12)">
+            <circle r="11"/>
+            <ellipse rx="9" ry="78" cy="-78"/>
+            <ellipse rx="9" ry="78" cy="-78" transform="rotate(120)"/>
+            <ellipse rx="9" ry="78" cy="-78" transform="rotate(240)"/>
+          </g>
+          {/* Turbine 2 – medium, mid-ground */}
+          <path d="M 215 750 L 219 478 L 223 478 L 227 750 Z"/>
+          <g transform="translate(221,476) rotate(-10)">
+            <circle r="8"/>
+            <ellipse rx="6" ry="56" cy="-56"/>
+            <ellipse rx="6" ry="56" cy="-56" transform="rotate(120)"/>
+            <ellipse rx="6" ry="56" cy="-56" transform="rotate(240)"/>
+          </g>
+          {/* Turbine 3 – small, far background */}
+          <path d="M 613 750 L 615 572 L 618 572 L 620 750 Z"/>
+          <g transform="translate(616,570) rotate(27)">
+            <circle r="5.5"/>
+            <ellipse rx="4.5" ry="40" cy="-40"/>
+            <ellipse rx="4.5" ry="40" cy="-40" transform="rotate(120)"/>
+            <ellipse rx="4.5" ry="40" cy="-40" transform="rotate(240)"/>
+          </g>
+          {/* Turbine 4 – tiny, horizon */}
+          <path d="M 83 750 L 85 618 L 87 618 L 89 750 Z"/>
+          <g transform="translate(86,616) rotate(-5)">
+            <circle r="3.5"/>
+            <ellipse rx="3" ry="26" cy="-26"/>
+            <ellipse rx="3" ry="26" cy="-26" transform="rotate(120)"/>
+            <ellipse rx="3" ry="26" cy="-26" transform="rotate(240)"/>
+          </g>
+          {/* Ground line */}
+          <rect x="0" y="748" width="700" height="2"/>
+        </g>
+      </svg>
       <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[360px_1fr] lg:gap-16">
           <div>
