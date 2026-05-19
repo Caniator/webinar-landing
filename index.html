@@ -588,22 +588,40 @@ function TrustBar() {
     { target: 35,    suffix: '',  l: 'Countries' }
   ];
   return (
-    <section className="border-y border-ae-ink-100 bg-ae-ice-blue/40">
+    <section className="bg-ae-ink-900 text-white">
       <div className="mx-auto max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10">
         <div className="grid grid-cols-1 items-center gap-y-6 sm:grid-cols-[1.4fr_1fr_1fr_1fr] sm:gap-x-8">
-          <div className="text-[13px] sm:text-[14px] text-ae-ink-700">
+          <div className="text-[13px] sm:text-[14px] text-white/70">
             <Eyebrow className="mb-2">Trusted by wind operators worldwide</Eyebrow>
-            <div className="leading-[1.45] text-ae-ink-900">
+            <div className="leading-[1.45] text-white/85">
               Aerones services major operators — NextEra, GE Vernova, Vestas, Enel, Siemens Gamesa — and the OEMs behind them.
             </div>
           </div>
           {stats.map((s, i) =>
-            <div key={i} className="border-t border-ae-ink-200 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
-              <div className="font-medium leading-none tracking-[-0.02em] text-ae-dark-blue" style={{ fontSize: 'clamp(30px, 3.6vw, 42px)' }}>
+            <div key={i} className="border-t border-white/10 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+              <div className="font-medium leading-none tracking-[-0.02em] text-white" style={{ fontSize: 'clamp(30px, 3.6vw, 42px)' }}>
                 <CountUp target={s.target} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-[12px] font-medium uppercase tracking-eyebrow text-ae-ink-500">{s.l}</div>
+              <div className="mt-2 text-[12px] font-medium uppercase tracking-eyebrow text-white/50">{s.l}</div>
             </div>
+          )}
+        </div>
+        {/* Client logo strip */}
+        <div className="mt-8 border-t border-white/10 pt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
+          {[
+            { name: 'NextEra Energy',   domain: 'nexteraenergy.com' },
+            { name: 'GE Vernova',       domain: 'gevernova.com' },
+            { name: 'Vestas',           domain: 'vestas.com' },
+            { name: 'Enel',             domain: 'enel.com' },
+            { name: 'Siemens Gamesa',   domain: 'siemensgamesa.com' },
+          ].map(({ name, domain }) =>
+            <img key={domain}
+              src={`https://cdn.brandfetch.io/${domain}/w/200/h/50/logo`}
+              alt={name}
+              title={name}
+              style={{ height: '28px', width: 'auto', filter: 'brightness(0) invert(1)', opacity: 0.55 }}
+              onError={e => { e.currentTarget.style.display = 'none'; }}
+            />
           )}
         </div>
       </div>
@@ -843,7 +861,7 @@ function PipedriveForm() {
 
 function RegistrationSection() {
   return (
-    <section id="register" className="relative overflow-hidden bg-ae-dark-blue text-white">
+    <section id="register" className="relative overflow-hidden bg-ae-ink-900 text-white">
       {/* Blueprint pattern overlay */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.10]"
         style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
