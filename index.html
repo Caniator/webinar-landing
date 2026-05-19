@@ -642,7 +642,7 @@ function ValueProps() {
         </div>
         <div className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-3">
           {items.map((it, i) =>
-            <div key={i} className="pt-6">
+            <div key={i} className="rounded-md bg-ae-ink-50 p-6">
               <div className="flex h-11 w-11 items-center justify-center rounded-md bg-ae-ice-blue text-ae-dark-blue">
                 <Icon name={it.icon} size={22} stroke={1.75} />
               </div>
@@ -748,7 +748,7 @@ function SpeakerPortrait({ src, initials, alt, objectPosition = '50% 35%' }) {
   const [errored, setErrored] = useState(false);
   if (src && !errored) {
     return (
-      <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-ae-ink-100">
+      <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-ae-ink-100">
         <img src={src} alt={alt} className="absolute inset-0 h-full w-full"
              onError={() => setErrored(true)} loading="lazy"
              style={{ objectFit: 'cover', objectPosition }} />
@@ -756,7 +756,7 @@ function SpeakerPortrait({ src, initials, alt, objectPosition = '50% 35%' }) {
     );
   }
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-sm bg-ae-ink-100">
+    <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-ae-ink-100">
       <div aria-hidden="true" className="absolute inset-0 opacity-[0.18]"
         style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center' }} />
       <div className="absolute inset-0 flex items-center justify-center">
@@ -883,7 +883,7 @@ function RegistrationSection() {
               </div>
             </div>
           </div>
-          <div className="rounded-sm bg-white px-3 pb-3 pt-10 text-ae-ink-900 sm:px-4 sm:pb-4 sm:pt-14">
+          <div className="rounded-xl bg-white px-3 pb-3 pt-10 text-ae-ink-900 sm:px-4 sm:pb-4 sm:pt-14">
             <PipedriveForm />
           </div>
         </div>
