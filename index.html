@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>From Inspection to Insight — The Aerones Wind Operations Stack · Live · June 11, 2026</title>
-  <meta name="description" content="Live webinar with Aerones VP of Data Andis Cīrulis and Product Manager Nauris Horsts. See the Customer Portal, Visual Inspection Studio, and AI planning tools — demoed on real turbine data. June 11, 2026, 3:00 PM CEST / 8:00 AM CT. Free, 60 minutes, with live Q&A." />
+  <meta name="description" content="Live webinar with Aerones Head of Sales Davis Krastins and Product Manager Nauris Horsts. See the Customer Portal, Visual Inspection Studio, and AI planning tools — demoed on real turbine data. June 11, 2026, 3:00 PM CEST / 8:00 AM CT. Free, 60 minutes, with live Q&A." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://webinar.aerones.com/" />
 
@@ -489,7 +489,7 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false }) {
             </h1>
 
             <p className="mt-6 max-w-[560px] text-[16px] leading-[1.55] text-white/90 sm:text-[18px] sm:leading-[1.5]">
-              From the Customer Portal to Visual Inspection Studio to our AI planning tools, join VP of Data <span className="text-white">Andis Cīrulis</span> and Product Manager <span className="text-white">Nauris Horsts</span> for a working tour of the software wind operators are using to cut downtime, sharpen budgets, and act on data faster.
+              From the Customer Portal to Visual Inspection Studio to our AI planning tools, join Head of Sales <span className="text-white">Davis Krastins</span> and Product Manager <span className="text-white">Nauris Horsts</span> for a working tour of the software wind operators are using to cut downtime, sharpen budgets, and act on data faster.
             </p>
 
             {/* Date / time / format strip */}
@@ -660,7 +660,7 @@ function Agenda() {
     { t: '10 min', title: 'Customer Portal walkthrough',     body: 'Fleet visibility, reporting, and collaboration across teams.' },
     { t: '10 min', title: 'Visual Inspection Studio',        body: 'From raw inspection footage to actionable defect data.' },
     { t: '15 min', title: 'Data tools and the AI stack',     body: 'Predictive insights and smarter operations planning.' },
-    { t: '15 min', title: 'Live Q&A with Andis and Nauris',  body: 'Bring questions on fleet inspections, defect tracking, or planning.' }
+    { t: '15 min', title: 'Live Q&A with Davis and Nauris',  body: 'Bring questions on fleet inspections, defect tracking, or planning.' }
   ];
   return (
     <section id="agenda" className="relative overflow-hidden bg-ae-ink-50">
@@ -767,12 +767,12 @@ function SpeakerPortrait({ src, initials, alt, objectPosition = '50% 35%' }) {
 function Speakers({ tweaks }) {
   const people = [
     {
-      initials: 'AC',
-      src: 'assets/speakers/andis-cirulis.jpg',
-      name: 'Andis Cīrulis',
-      role: 'VP of Data, Aerones',
-      bio: "Andis leads Aerones' data and AI organization, turning years of high-resolution wind turbine inspection data into the predictive models and planning tools used by operators worldwide. He works directly with asset managers to translate operational data into clearer decisions on inspection cadence, repair prioritization, and long-range maintenance budgets.",
-      tags: ['Data & AI', 'Predictive models', 'Asset planning'],
+      initials: 'DK',
+      src: 'assets/speakers/davis-krastins.jpg',
+      name: 'Davis Krastins',
+      role: 'Head of Sales — EU+APAC, Aerones',
+      bio: "Davis leads Aerones' commercial expansion across Europe and Asia-Pacific, working directly with wind operators and OEMs to bring robotic inspection and repair services to new markets. He partners with asset managers and procurement teams to match Aerones' technology to the operational and financial needs of large-scale wind portfolios.",
+      tags: ['Sales', 'EU & APAC', 'Wind operators'],
       objectPosition: `${tweaks?.andisPosX ?? 50}% ${tweaks?.andisPosY ?? 35}%`
     },
     {
@@ -1056,8 +1056,8 @@ function App() {
 
       <TweaksPanel>
         <TweakSection label="Speaker photos" />
-        <TweakSlider label="Andis — horizontal" value={t.andisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosX', v)} />
-        <TweakSlider label="Andis — vertical"   value={t.andisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosY', v)} />
+        <TweakSlider label="Davis — horizontal" value={t.andisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosX', v)} />
+        <TweakSlider label="Davis — vertical"   value={t.andisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosY', v)} />
         <TweakSlider label="Nauris — horizontal" value={t.naurisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosX', v)} />
         <TweakSlider label="Nauris — vertical"   value={t.naurisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosY', v)} />
         <TweakButton label="Match Andis → Nauris" onClick={() => setTweak({ naurisPosX: t.andisPosX, naurisPosY: t.andisPosY })} />
