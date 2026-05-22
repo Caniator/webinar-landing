@@ -446,25 +446,28 @@ function Nav({ onRegister }) {
 }
 
 /* ---------------- Hero ---------------- */
-function Hero({ onRegister, patternOpacity = 70, showVideo = false }) {
+function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} }) {
   const patternAlpha = Math.max(0, Math.min(0.22, (patternOpacity / 100) * 0.22));
   return (
-    <section id="top" className="relative overflow-hidden bg-ae-dark-blue text-white"
-      style={{ backgroundImage: "url('assets/photos/tower-interior.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
-      {/* Dark blue semi-transparent overlay */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ backgroundColor: 'rgba(13,35,65,0.82)' }} />
-      {/* Blueprint texture */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0"
-        style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: patternAlpha }} />
-
-      {/* Radial highlight */}
-      <div aria-hidden="true"
-        className="pointer-events-none absolute -right-[10%] top-1/2 hidden h-[120%] w-[70%] -translate-y-1/2 lg:block"
-        style={{ background: 'radial-gradient(60% 50% at 50% 50%, rgba(136,205,246,0.22) 0%, rgba(28,103,161,0) 70%)' }} />
-
-      {/* Bottom fade */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-        style={{ background: 'linear-gradient(180deg, rgba(11,26,39,0) 0%, rgba(11,26,39,0.35) 100%)' }} />
+    <section id="top" className="relative bg-ae-dark-blue text-white"
+      style={{ backgroundImage: "url('assets/photos/tower-interior.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', marginBottom: '-80px' }}>
+      {/* Background layers + speakers — clipped to hero bounds */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(13,35,65,0.82)' }} />
+        <div className="absolute inset-0"
+          style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: patternAlpha }} />
+        <div className="absolute -right-[10%] top-1/2 hidden h-[120%] w-[70%] -translate-y-1/2 lg:block"
+          style={{ background: 'radial-gradient(60% 50% at 50% 50%, rgba(136,205,246,0.22) 0%, rgba(28,103,161,0) 70%)' }} />
+        <div className="absolute inset-x-0 bottom-0 h-24"
+          style={{ background: 'linear-gradient(180deg, rgba(11,26,39,0) 0%, rgba(11,26,39,0.35) 100%)' }} />
+        {/* Movie poster speakers — behind laptop */}
+        <img src="assets/speakers/davis-krastins-nobg.png" alt=""
+          className="pointer-events-none absolute hidden lg:block"
+          style={{ bottom: 0, left: '57%', height: '92%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.85) contrast(1.08)', maskImage: 'linear-gradient(to top, black 70%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 70%, transparent 100%)' }} />
+        <img src="assets/speakers/arturs-adamss-nobg.png" alt=""
+          className="pointer-events-none absolute hidden lg:block"
+          style={{ bottom: 0, left: '73%', height: '80%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.70) contrast(1.08)', maskImage: 'linear-gradient(to top, black 60%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 60%, transparent 100%)' }} />
+      </div>
 
       {/* Corner stamps */}
       <div className="pointer-events-none absolute left-5 top-5 z-10 hidden text-[10px] font-medium uppercase tracking-stamp text-white/70 sm:left-8 sm:top-6 sm:block">
@@ -523,22 +526,24 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false }) {
           </div>
 
           {/* Right: laptop product shot */}
-          <div className="relative">
+          <div className="relative" style={{ zIndex: 3, alignSelf: 'end', transform: `translateY(${tweaks.laptopTranslateY ?? 72}px)` }}>
             <div className="absolute -inset-x-4 -bottom-6 -top-4 -z-10 hidden rounded-[40px] opacity-90 sm:block"
               style={{ background: 'radial-gradient(60% 60% at 60% 50%, rgba(136,205,246,0.18) 0%, rgba(28,103,161,0) 70%)' }} />
 
-            {/* YouTube video playing on the laptop screen — loads after 5s */}
-            <iframe
-              src={showVideo ? "https://www.youtube.com/embed/8JlBfVeRNwg?autoplay=1&mute=1&loop=1&playlist=8JlBfVeRNwg&controls=0&modestbranding=1&rel=0" : undefined}
-              allow="autoplay; encrypted-media"
-              className="absolute border-0"
-              style={{ top: '4.5%', left: '6%', width: '94%', height: '90%', zIndex: 2, opacity: showVideo ? 1 : 0, transition: 'opacity 0.8s ease', pointerEvents: 'none' }}
-              title="Aerones Visual Inspection Studio walkthrough"
-            />
-
-            <img src="assets/photos/portal-laptop.png" alt="Aerones Customer Portal shown on a laptop"
-              loading="eager" className="relative block w-full max-w-none lg:-mr-12 xl:-mr-20"
-              style={{ filter: 'drop-shadow(0 30px 50px rgba(0,0,0,0.35)) drop-shadow(0 8px 16px rgba(0,0,0,0.20))', zIndex: 1, position: 'relative', transform: 'scale(1.16)', transformOrigin: '31% top' }} />
+            {/* Scale wrapper — keeps iframe locked to laptop screen */}
+            <div className="relative lg:-mr-12 xl:-mr-20" style={{ transform: `scale(${(tweaks.laptopScale ?? 87) / 100})`, transformOrigin: `${tweaks.laptopOriginX ?? 31}% bottom` }}>
+              {/* YouTube video playing on the laptop screen — loads after 5s */}
+              <iframe
+                src={showVideo ? "https://www.youtube.com/embed/8JlBfVeRNwg?autoplay=1&mute=1&loop=1&playlist=8JlBfVeRNwg&controls=0&modestbranding=1&rel=0" : undefined}
+                allow="autoplay; encrypted-media"
+                className="absolute border-0"
+                style={{ top: `${tweaks.videoTop ?? 4.5}%`, left: `${tweaks.videoLeft ?? 6}%`, width: `${tweaks.videoWidth ?? 94}%`, height: `${tweaks.videoHeight ?? 90}%`, zIndex: 2, opacity: showVideo ? 1 : 0, transition: 'opacity 0.8s ease', pointerEvents: 'none' }}
+                title="Aerones Visual Inspection Studio walkthrough"
+              />
+              <img src="assets/photos/portal-laptop.png" alt="Aerones Customer Portal shown on a laptop"
+                loading="eager" className="relative block w-full max-w-none"
+                style={{ filter: 'drop-shadow(0 30px 50px rgba(0,0,0,0.35)) drop-shadow(0 8px 16px rgba(0,0,0,0.20))', zIndex: 1, position: 'relative' }} />
+            </div>
           </div>
         </div>
       </div>
@@ -585,7 +590,7 @@ function TrustBar() {
     { target: 165000,  suffix: '+', l: 'Tonnes of CO₂ reduced' }
   ];
   return (
-    <section className="bg-ae-ink-900 text-white border-t border-white/20">
+    <section className="bg-ae-ink-900 text-white border-t border-white/20" style={{ paddingTop: '80px' }}>
       <div className="mx-auto max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10">
         <div className="grid grid-cols-1 items-center gap-y-6 sm:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] sm:gap-x-8">
           <div className="text-[13px] sm:text-[14px] text-white/70">
@@ -1013,7 +1018,14 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "naurisPosX": 50,
   "naurisPosY": 61,
   "primaryCta": "#6FC193",
-  "heroOverlay": 70
+  "heroOverlay": 86,
+  "laptopScale": 84,
+  "laptopOriginX": 0,
+  "laptopTranslateY": 134,
+  "videoTop": 4,
+  "videoLeft": 10,
+  "videoWidth": 80.5,
+  "videoHeight": 77.5
 }/*EDITMODE-END*/;
 
 /* ---------------- App ---------------- */
@@ -1045,7 +1057,7 @@ function App() {
   return (
     <div className="font-sans">
       <Nav onRegister={scrollToRegister} />
-      <Hero onRegister={scrollToRegister} patternOpacity={t.heroOverlay} showVideo={showVideo} />
+      <Hero onRegister={scrollToRegister} patternOpacity={t.heroOverlay} showVideo={showVideo} tweaks={t} />
       <TrustBar />
       <ValueProps />
       <Agenda />
@@ -1064,6 +1076,17 @@ function App() {
 
         <TweakSection label="Hero" />
         <TweakSlider label="Pattern intensity" value={t.heroOverlay} min={0} max={100} unit="%" onChange={(v) => setTweak('heroOverlay', v)} />
+
+        <TweakSection label="Laptop" />
+        <TweakSlider label="Size"            value={t.laptopScale}      min={50}  max={130} step={1}   unit="%" onChange={(v) => setTweak('laptopScale', v)} />
+        <TweakSlider label="Vertical offset" value={t.laptopTranslateY} min={0}   max={200} step={1}   unit="px" onChange={(v) => setTweak('laptopTranslateY', v)} />
+        <TweakSlider label="Origin X"        value={t.laptopOriginX}    min={0}   max={100} step={1}   unit="%" onChange={(v) => setTweak('laptopOriginX', v)} />
+
+        <TweakSection label="Video overlay" />
+        <TweakSlider label="Top"    value={t.videoTop}    min={0}  max={20}  step={0.5} unit="%" onChange={(v) => setTweak('videoTop', v)} />
+        <TweakSlider label="Left"   value={t.videoLeft}   min={0}  max={30}  step={0.5} unit="%" onChange={(v) => setTweak('videoLeft', v)} />
+        <TweakSlider label="Width"  value={t.videoWidth}  min={50} max={100} step={0.5} unit="%" onChange={(v) => setTweak('videoWidth', v)} />
+        <TweakSlider label="Height" value={t.videoHeight} min={50} max={100} step={0.5} unit="%" onChange={(v) => setTweak('videoHeight', v)} />
 
         <TweakSection label="Brand" />
         <TweakColor label="Primary CTA" value={t.primaryCta}
