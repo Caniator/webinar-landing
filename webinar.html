@@ -978,8 +978,13 @@ function Footer() {
               Robot-enabled wind turbine maintenance and inspections. Serving operators that represent over 50% of global wind capacity.
             </p>
             <div className="mt-5 flex gap-5">
-              {['LinkedIn', 'YouTube', 'Facebook', 'Instagram'].map((s) =>
-                <a key={s} href="#" className="text-[12px] text-white/70 transition-colors hover:text-white">{s}</a>
+              {[
+                { label: 'LinkedIn',  href: 'https://www.linkedin.com/company/aerones' },
+                { label: 'YouTube',   href: 'https://www.youtube.com/aerones' },
+                { label: 'Facebook',  href: 'https://www.facebook.com/aeronescom/' },
+                { label: 'Instagram', href: 'https://www.instagram.com/aerones_com/' },
+              ].map(({ label, href }) =>
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="text-[12px] text-white/70 transition-colors hover:text-white">{label}</a>
               )}
             </div>
           </div>
