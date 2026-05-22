@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>From Inspection to Insight — The Aerones Wind Operations Stack · Live · June 11, 2026</title>
-  <meta name="description" content="Live webinar with Aerones Head of Sales Davis Krastins and Product Manager Nauris Horsts. See the Customer Portal, Visual Inspection Studio, and AI planning tools — demoed on real turbine data. June 11, 2026, 3:00 PM CEST / 8:00 AM CT. Free, 60 minutes, with live Q&A." />
+  <meta name="description" content="Live webinar with Aerones Head of Sales Davis Krastins and Senior Front End Developer Arturs Adamss. See the Customer Portal, Visual Inspection Studio, and AI planning tools — demoed on real turbine data. June 11, 2026, 3:00 PM CEST / 8:00 AM CT. Free, 60 minutes, with live Q&A." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://webinar.aerones.com/" />
 
@@ -489,7 +489,7 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false }) {
             </h1>
 
             <p className="mt-6 max-w-[560px] text-[16px] leading-[1.55] text-white/90 sm:text-[18px] sm:leading-[1.5]">
-              From the Customer Portal to Visual Inspection Studio to our AI planning tools, join Head of Sales <span className="text-white">Davis Krastins</span> and Product Manager <span className="text-white">Nauris Horsts</span> for a working tour of the software wind operators are using to cut downtime, sharpen budgets, and act on data faster.
+              From the Customer Portal to Visual Inspection Studio to our AI planning tools, join Head of Sales <span className="text-white">Davis Krastins</span> and Senior Front End Developer <span className="text-white">Arturs Adamss</span> for a working tour of the software wind operators are using to cut downtime, sharpen budgets, and act on data faster.
             </p>
 
             {/* Date / time / format strip */}
@@ -660,7 +660,7 @@ function Agenda() {
     { t: '10 min', title: 'Customer Portal walkthrough',     body: 'Fleet visibility, reporting, and collaboration across teams.' },
     { t: '10 min', title: 'Visual Inspection Studio',        body: 'From raw inspection footage to actionable defect data.' },
     { t: '15 min', title: 'Data tools and the AI stack',     body: 'Predictive insights and smarter operations planning.' },
-    { t: '15 min', title: 'Live Q&A with Davis and Nauris',  body: 'Bring questions on fleet inspections, defect tracking, or planning.' }
+    { t: '15 min', title: 'Live Q&A with Davis and Arturs',  body: 'Bring questions on fleet inspections, defect tracking, or planning.' }
   ];
   return (
     <section id="agenda" className="relative overflow-hidden bg-ae-ink-50">
@@ -776,12 +776,12 @@ function Speakers({ tweaks }) {
       objectPosition: `${tweaks?.andisPosX ?? 50}% ${tweaks?.andisPosY ?? 35}%`
     },
     {
-      initials: 'NH',
-      src: 'assets/speakers/nauris-horsts.jpg',
-      name: 'Nauris Horsts',
-      role: 'Software Product Manager, Aerones',
-      bio: "Nauris leads product for Aerones' Customer Portal and Visual Inspection Studio. He partners with wind operators and OEMs to shape the workflows behind fleet inspections, defect tracking, and reporting — making sure every release closes a real gap in how teams move from raw inspection data to maintenance action.",
-      tags: ['Customer Portal', 'Visual Inspection Studio', 'OEM workflows'],
+      initials: 'AA',
+      src: 'assets/speakers/arturs-adamss.jpg',
+      name: 'Arturs Adamss',
+      role: 'Senior Front End Developer, Aerones',
+      bio: "Arturs is the lead developer behind Aerones' Visual Inspection Studio — the software wind operators use to turn raw inspection footage into actionable defect data. He builds the interfaces that let asset managers and OEM service teams navigate, annotate, and act on turbine inspection results at scale.",
+      tags: ['Visual Inspection Studio', 'Front End', 'UI/UX'],
       objectPosition: `${tweaks?.naurisPosX ?? 50}% ${tweaks?.naurisPosY ?? 61}%`
     }
   ];
@@ -1058,9 +1058,9 @@ function App() {
         <TweakSection label="Speaker photos" />
         <TweakSlider label="Davis — horizontal" value={t.andisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosX', v)} />
         <TweakSlider label="Davis — vertical"   value={t.andisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosY', v)} />
-        <TweakSlider label="Nauris — horizontal" value={t.naurisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosX', v)} />
-        <TweakSlider label="Nauris — vertical"   value={t.naurisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosY', v)} />
-        <TweakButton label="Match Andis → Nauris" onClick={() => setTweak({ naurisPosX: t.andisPosX, naurisPosY: t.andisPosY })} />
+        <TweakSlider label="Arturs — horizontal" value={t.naurisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosX', v)} />
+        <TweakSlider label="Arturs — vertical"   value={t.naurisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosY', v)} />
+        <TweakButton label="Match Davis → Arturs" onClick={() => setTweak({ naurisPosX: t.andisPosX, naurisPosY: t.andisPosY })} />
 
         <TweakSection label="Hero" />
         <TweakSlider label="Pattern intensity" value={t.heroOverlay} min={0} max={100} unit="%" onChange={(v) => setTweak('heroOverlay', v)} />
