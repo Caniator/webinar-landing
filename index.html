@@ -464,17 +464,12 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} 
           style={{ backgroundImage: "url('assets/patterns/blueprint-mid.png')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: patternAlpha }} />
         <div className="absolute inset-x-0 bottom-0 h-24"
           style={{ background: 'linear-gradient(180deg, rgba(11,26,39,0) 0%, rgba(11,26,39,0.35) 100%)' }} />
-        {/* Movie poster speakers — behind laptop */}
-        <img src="assets/speakers/davis-krastins-nobg-v2.png" alt=""
-          className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '44%', height: '82%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.80) contrast(1.08)' }} />
-        <img src="assets/speakers/nauris-horsts-nobg-v2.png" alt=""
-          className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '74%', height: '82%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 2, filter: 'brightness(0.80) contrast(1.06)' }} />
-        <img src="assets/speakers/arturs-adamss-nobg-v2.png" alt=""
-          className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '55%', height: '88%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 3, filter: 'brightness(0.90) contrast(1.08)' }} />
       </div>
+      {/* Speaker collage — outside overflow-hidden to bridge hero/TrustBar gap */}
+      <img src="assets/speakers/hosts-collage.png" alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute hidden lg:block"
+        style={{ bottom: `${tweaks?.collagePosY ?? -80}px`, left: `${tweaks?.collagePosX ?? 35}%`, height: `${tweaks?.collageHeight ?? 95}%`, width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1 }} />
 
       {/* Corner stamps */}
       <div className="pointer-events-none absolute left-5 top-5 z-10 hidden text-[10px] font-medium uppercase tracking-stamp text-white/70 sm:left-8 sm:top-6 sm:block">
@@ -533,7 +528,7 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} 
           </div>
 
           {/* Right: laptop product shot */}
-          <div className="relative laptop-col-offset" style={{ zIndex: 3, alignSelf: 'end', '--laptop-translateY': `translateY(${tweaks.laptopTranslateY ?? 134}px)`, marginLeft: '60px' }}>
+          <div className="relative laptop-col-offset" style={{ zIndex: 3, alignSelf: 'end', '--laptop-translateY': `translateY(${tweaks.laptopTranslateY ?? 134}px)`, marginLeft: `${tweaks.laptopMarginLeft ?? 160}px` }}>
             <div className="absolute -inset-x-4 -bottom-6 -top-4 -z-10 hidden rounded-[40px] opacity-90 sm:block"
               style={{ background: 'radial-gradient(60% 60% at 60% 50%, rgba(136,205,246,0.18) 0%, rgba(28,103,161,0) 70%)' }} />
 
@@ -1034,13 +1029,13 @@ function Footer() {
 
 /* ---------------- Tweak defaults ---------------- */
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "andisPosX": 50,
-  "andisPosY": 35,
-  "naurisPosX": 50,
-  "naurisPosY": 61,
+  "collagePosX": 35,
+  "collagePosY": -16,
+  "collageHeight": 101,
   "primaryCta": "#6FC193",
   "heroOverlay": 86,
-  "laptopScale": 84,
+  "laptopScale": 96,
+  "laptopMarginLeft": -23,
   "laptopOriginX": 0,
   "laptopTranslateY": 134,
   "videoTop": 4,
@@ -1088,18 +1083,17 @@ function App() {
       <Footer />
 
       <TweaksPanel>
-        <TweakSection label="Speaker photos" />
-        <TweakSlider label="Davis — horizontal" value={t.andisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosX', v)} />
-        <TweakSlider label="Davis — vertical"   value={t.andisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('andisPosY', v)} />
-        <TweakSlider label="Arturs — horizontal" value={t.naurisPosX} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosX', v)} />
-        <TweakSlider label="Arturs — vertical"   value={t.naurisPosY} min={0} max={100} unit="%" onChange={(v) => setTweak('naurisPosY', v)} />
-        <TweakButton label="Match Davis → Arturs" onClick={() => setTweak({ naurisPosX: t.andisPosX, naurisPosY: t.andisPosY })} />
+        <TweakSection label="Speaker collage" />
+        <TweakSlider label="X position" value={t.collagePosX}  min={0}    max={80}   unit="%"  onChange={(v) => setTweak('collagePosX', v)} />
+        <TweakSlider label="Y position" value={t.collagePosY}  min={-200} max={100}  unit="px" onChange={(v) => setTweak('collagePosY', v)} />
+        <TweakSlider label="Height"     value={t.collageHeight} min={50}   max={150}  unit="%"  onChange={(v) => setTweak('collageHeight', v)} />
 
         <TweakSection label="Hero" />
         <TweakSlider label="Pattern intensity" value={t.heroOverlay} min={0} max={100} unit="%" onChange={(v) => setTweak('heroOverlay', v)} />
 
         <TweakSection label="Laptop" />
         <TweakSlider label="Size"            value={t.laptopScale}      min={50}  max={130} step={1}   unit="%" onChange={(v) => setTweak('laptopScale', v)} />
+        <TweakSlider label="X position"      value={t.laptopMarginLeft} min={-200} max={400} step={1}  unit="px" onChange={(v) => setTweak('laptopMarginLeft', v)} />
         <TweakSlider label="Vertical offset" value={t.laptopTranslateY} min={0}   max={200} step={1}   unit="px" onChange={(v) => setTweak('laptopTranslateY', v)} />
         <TweakSlider label="Origin X"        value={t.laptopOriginX}    min={0}   max={100} step={1}   unit="%" onChange={(v) => setTweak('laptopOriginX', v)} />
 
