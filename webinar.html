@@ -795,6 +795,15 @@ function Speakers({ tweaks }) {
       bio: "Arturs is the lead developer behind Aerones' Visual Inspection Studio — the platform wind operators use to turn raw inspection footage into actionable defect data. He builds the systems and workflows that enable asset managers and OEM service teams to navigate, annotate, analyze, and act on turbine inspection results at scale.",
       tags: ['Software Engineering', 'Development'],
       objectPosition: `${tweaks?.naurisPosX ?? 50}% ${tweaks?.naurisPosY ?? 61}%`
+    },
+    {
+      initials: 'NH',
+      src: 'assets/speakers/nauris-horsts.jpg',
+      name: 'Nauris Horsts',
+      role: 'Head of Robotics, Aerones',
+      bio: "Nauris leads the engineering teams behind Aerones' robotic platforms — the drones and crawlers that perform leading edge repair, coating, and visual inspection on wind turbine blades. He drives the development of autonomous systems that allow Aerones to operate safely and efficiently at height, without rope-access technicians.",
+      tags: ['Robotics', 'Engineering', 'Automation'],
+      objectPosition: '50% 20%'
     }
   ];
   return (
@@ -807,7 +816,7 @@ function Speakers({ tweaks }) {
             The team building it, on the call.
           </h2>
         </div>
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 xl:grid-cols-3">
           {people.map((p, i) =>
             <article key={i} className="grid grid-cols-1 gap-6 sm:grid-cols-[180px_1fr] sm:gap-8">
               <div className="ae-zoom overflow-hidden">
