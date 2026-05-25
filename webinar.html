@@ -818,7 +818,7 @@ function Speakers({ tweaks }) {
         </div>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 xl:grid-cols-3">
           {people.map((p, i) =>
-            <article key={i} className="grid grid-cols-1 gap-6 sm:grid-cols-[180px_1fr] sm:gap-8">
+            <article key={i} className="grid grid-cols-1 gap-6 sm:grid-cols-[180px_1fr] sm:gap-8 xl:grid-cols-1 xl:gap-6">
               <div className="ae-zoom overflow-hidden">
                 <SpeakerPortrait src={p.src} initials={p.initials} alt={`Portrait of ${p.name}`} objectPosition={p.objectPosition} />
               </div>
