@@ -467,13 +467,13 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} 
         {/* Movie poster speakers — behind laptop */}
         <img src="assets/speakers/davis-krastins-nobg.png" alt=""
           className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '51%', height: '102%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.85) contrast(1.08)', maskImage: 'linear-gradient(to top, black 70%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 70%, transparent 100%)' }} />
-        <img src="assets/speakers/arturs-adamss-nobg.png" alt=""
-          className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '65%', height: '90%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.85) contrast(1.08)' }} />
+          style={{ bottom: 0, left: '44%', height: '82%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.80) contrast(1.08)' }} />
         <img src="assets/speakers/nauris-horsts-nobg.png" alt=""
           className="pointer-events-none absolute hidden lg:block"
-          style={{ bottom: 0, left: '73%', height: '102%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 1, filter: 'brightness(0.75) contrast(1.06)', maskImage: 'linear-gradient(to top, black 70%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to top, black 70%, transparent 100%)' }} />
+          style={{ bottom: 0, left: '74%', height: '82%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 2, filter: 'brightness(0.80) contrast(1.06)' }} />
+        <img src="assets/speakers/arturs-adamss-nobg.png" alt=""
+          className="pointer-events-none absolute hidden lg:block"
+          style={{ bottom: 0, left: '55%', height: '88%', width: 'auto', objectFit: 'contain', objectPosition: 'bottom', zIndex: 3, filter: 'brightness(0.90) contrast(1.08)' }} />
       </div>
 
       {/* Corner stamps */}
@@ -533,7 +533,7 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} 
           </div>
 
           {/* Right: laptop product shot */}
-          <div className="relative laptop-col-offset" style={{ zIndex: 3, alignSelf: 'end', '--laptop-translateY': `translateY(${tweaks.laptopTranslateY ?? 134}px)`, marginLeft: '-80px' }}>
+          <div className="relative laptop-col-offset" style={{ zIndex: 3, alignSelf: 'end', '--laptop-translateY': `translateY(${tweaks.laptopTranslateY ?? 134}px)`, marginLeft: '60px' }}>
             <div className="absolute -inset-x-4 -bottom-6 -top-4 -z-10 hidden rounded-[40px] opacity-90 sm:block"
               style={{ background: 'radial-gradient(60% 60% at 60% 50%, rgba(136,205,246,0.18) 0%, rgba(28,103,161,0) 70%)' }} />
 
