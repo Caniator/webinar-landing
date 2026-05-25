@@ -540,7 +540,7 @@ function Hero({ onRegister, patternOpacity = 70, showVideo = false, tweaks = {} 
             <div className="relative lg:-mr-12 xl:-mr-20" style={{ transform: `scale(${(tweaks.laptopScale ?? 87) / 100})`, transformOrigin: `${tweaks.laptopOriginX ?? 31}% bottom` }}>
               {/* YouTube video playing on the laptop screen — loads after 5s */}
               <iframe
-                src={showVideo ? "https://www.youtube.com/embed/8JlBfVeRNwg?autoplay=1&mute=1&loop=1&playlist=8JlBfVeRNwg&controls=0&modestbranding=1&rel=0" : undefined}
+                src={showVideo ? "https://www.youtube.com/embed/6SswkZdY8C0?autoplay=1&mute=1&loop=1&playlist=6SswkZdY8C0&controls=0&modestbranding=1&rel=0" : undefined}
                 allow="autoplay; encrypted-media"
                 className="absolute border-0"
                 style={{ top: `${tweaks.videoTop ?? 4.5}%`, left: `${tweaks.videoLeft ?? 6}%`, width: `${tweaks.videoWidth ?? 94}%`, height: `${tweaks.videoHeight ?? 90}%`, zIndex: 2, opacity: showVideo ? 1 : 0, transition: 'opacity 0.8s ease', pointerEvents: 'none' }}
