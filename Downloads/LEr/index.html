@@ -525,26 +525,38 @@ function Videos() {
 function Speakers() {
   const people = [
     {
-      photo: null,
-      initials: 'AC',
-      name: 'Andis Cīrulis',
-      role: 'VP of Data, Aerones',
-      bio: "Andis leads Aerones' data and AI organization, turning years of high-resolution wind turbine inspection data into the predictive models and planning tools used by operators worldwide.",
-      tags: ['Data & AI', 'Predictive models', 'Asset planning'],
+      photo: 'assets/photos/2_JPutrams_Large.jpg',
+      name: 'Jānis Putrams',
+      role: 'Role, Aerones',
+      bio: 'Bio coming soon.',
+      tags: [],
     },
     {
-      photo: null,
-      initials: 'NH',
-      name: 'Nauris Horsts',
-      role: 'Software Product Manager, Aerones',
-      bio: "Nauris leads product for Aerones' Customer Portal and Visual Inspection Studio. He partners with wind operators and OEMs to shape the workflows behind fleet inspections, defect tracking, and reporting.",
-      tags: ['Customer Portal', 'Visual Inspection Studio', 'OEM workflows'],
+      photo: 'assets/photos/DSC03468.jpg',
+      name: 'Davis Krastiņš',
+      role: 'Role, Aerones',
+      bio: 'Bio coming soon.',
+      tags: [],
+    },
+    {
+      photo: 'assets/photos/_EIF8299.jpg',
+      name: 'Speaker Name',
+      role: 'Role, Aerones',
+      bio: 'Bio coming soon.',
+      tags: [],
+    },
+    {
+      photo: 'assets/photos/ashley crowther.jpg',
+      name: 'Ashley Crowther',
+      role: 'Role',
+      bio: 'Bio coming soon.',
+      tags: [],
     },
   ];
   return (
     <section id="speakers" className="bg-white">
       <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
-        <div className="mb-12 max-w-2xl">
+        <div className="mb-10 max-w-2xl">
           <Eyebrow>Speakers</Eyebrow>
           <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
             style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
@@ -554,24 +566,34 @@ function Speakers() {
             More speakers to be confirmed. Full list shared with registered attendees.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+
+        {/* Group collage */}
+        <div className="mb-14 overflow-hidden rounded-2xl bg-ae-ink-900" style={{ maxHeight: '340px' }}>
+          <img src="assets/speakers/speakers-collage.png"
+            alt="Event speakers"
+            className="w-full object-cover object-top"
+            style={{ maxHeight: '340px' }} />
+        </div>
+
+        {/* Individual cards */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {people.map((p, i) =>
-            <article key={i} className="flex gap-6">
-              <div className="h-[80px] w-[80px] shrink-0 overflow-hidden rounded-lg bg-ae-orange/10 flex items-center justify-center text-ae-orange font-bold text-[22px]">
-                {p.photo
-                  ? <img src={p.photo} alt={p.name} className="h-full w-full object-cover" />
-                  : p.initials}
+            <article key={i} className="flex flex-col">
+              <div className="mb-4 overflow-hidden rounded-xl bg-ae-ink-100"
+                style={{ aspectRatio: '3/4' }}>
+                <img src={p.photo} alt={p.name}
+                  className="h-full w-full object-cover object-top" />
               </div>
-              <div>
-                <div className="text-[18px] font-medium text-ae-ink-900">{p.name}</div>
-                <div className="mb-3 text-[13px] font-medium text-ae-orange">{p.role}</div>
-                <p className="text-[13px] leading-relaxed text-ae-ink-700">{p.bio}</p>
+              <div className="text-[17px] font-semibold text-ae-ink-900 leading-snug">{p.name}</div>
+              <div className="mb-2 text-[13px] font-medium text-ae-orange">{p.role}</div>
+              <p className="text-[13px] leading-relaxed text-ae-ink-500">{p.bio}</p>
+              {p.tags.length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {p.tags.map((t, j) =>
                     <span key={j} className="rounded-sm bg-ae-ink-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-700 ring-1 ring-ae-ink-200">{t}</span>
                   )}
                 </div>
-              </div>
+              )}
             </article>
           )}
         </div>
