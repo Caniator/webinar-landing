@@ -526,6 +526,7 @@ function Speakers() {
   const people = [
     {
       photo: 'assets/photos/_EIF8299.jpg',
+      objectPos: 'center center',
       name: 'Dainis Kruze',
       role: 'Role, Aerones',
       bio: 'Bio coming soon.',
@@ -574,7 +575,8 @@ function Speakers() {
               <div className="mb-4 overflow-hidden rounded-xl bg-ae-ink-100"
                 style={{ aspectRatio: '3/4' }}>
                 <img src={p.photo} alt={p.name}
-                  className="h-full w-full object-cover object-top" />
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: p.objectPos || 'center top' }} />
               </div>
               <div className="text-[17px] font-semibold text-ae-ink-900 leading-snug">{p.name}</div>
               <div className="mb-2 text-[13px] font-medium text-ae-orange">{p.role}</div>
