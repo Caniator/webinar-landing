@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workshop &amp; Demo Day — Aerones HQ · October 28, 2026</title>
+  <meta name="description" content="A full day at Aerones HQ in Riga — live hardware demos, hands-on software sessions, and direct access to the team building the platform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      background: #fff;
+    }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(252,103,34,.55); }
+      50%       { opacity: .9; transform: scale(1.15); box-shadow: 0 0 0 5px rgba(252,103,34,0); }
+    }
+    .ae-dot-pulse { animation: dot-pulse 2.4s ease-in-out infinite; }
+    @keyframes ae-save-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(252,103,34,0); }
+      50%       { box-shadow: 0 0 0 10px rgba(252,103,34,0); }
+    }
+    .ae-save-pulse { animation: ae-save-glow 2.4s ease-in-out infinite; }
+    .ae-faq-open .ae-faq-chev { transform: rotate(180deg); }
+    .ae-faq-chev { transition: transform .25s ease; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ── Tailwind config ── */
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'ae-dark-blue':  '#1C67A1',
+        'ae-light-blue': '#30A2D6',
+        'ae-sky-blue':   '#88CDF6',
+        'ae-ice-blue':   '#BCE6FF',
+        'ae-ink-900':    '#13263A',
+        'ae-ink-700':    '#2C4359',
+        'ae-ink-500':    '#557089',
+        'ae-ink-400':    '#6B849A',
+        'ae-ink-300':    '#9DB1C3',
+        'ae-ink-200':    '#C7D3DF',
+        'ae-ink-100':    '#E3EAF1',
+        'ae-ink-50':     '#F3F6F9',
+        'ae-orange':     '#FC6722',
+      },
+      letterSpacing: { eyebrow: '0.08em' },
+    },
+  },
+};
+
+/* ── Icon paths (Lucide subset) ── */
+const ICONS = {
+  'calendar':      'M8 2v3m8-3v3M3 9h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  'clock':         'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-14v4l3 3',
+  'map-pin':       'M20 10c0 6-8 13-8 13S4 16 4 10a8 8 0 0 1 16 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+  'users':         'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  'monitor':       'M20 3H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8 21h8m-4-3v3',
+  'cpu':           'M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 6v4l3 3',
+  'wrench':        'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z',
+  'zap':           'M13 2 3 14h9l-1 8 10-12h-9l1-8z',
+  'arrow-right':   'M5 12h14M12 5l7 7-7 7',
+  'chevron-down':  'M6 9l6 6 6-6',
+  'check':         'M20 6 9 17l-5-5',
+  'coffee':        'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zm4-7v3m4-3v3m4-3v3',
+  'layers':        'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+  'wifi':          'M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01',
+  'presentation':  'M2 3h20v14H2zM8 21l4-4 4 4M12 17v4',
+};
+
+const Icon = ({ name, size = 20, stroke = 1.75, className = '' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth={stroke} strokeLinecap="round" strokeLinejoin="round"
+    className={className} aria-hidden="true"
+    style={{ display: 'inline-block', flexShrink: 0 }}>
+    <path d={ICONS[name] || ''} />
+  </svg>
+);
+
+/* ── Shared ── */
+const Eyebrow = ({ children, className = '' }) =>
+  <div className={`text-[11px] sm:text-xs font-medium uppercase tracking-eyebrow text-ae-orange ${className}`}>{children}</div>;
+
+const AccentRule = ({ className = '' }) =>
+  <div className={`h-[2px] w-10 bg-ae-orange ${className}`} />;
+
+function CountUp({ target, suffix = '' }) {
+  const [val, setVal] = useState(0);
+  const ref = useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      obs.disconnect();
+      const dur = 1600, t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / dur, 1);
+        setVal(Math.round((1 - Math.pow(1 - p, 3)) * target));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [target]);
+  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
+}
+
+/* ── Nav ── */
+function Nav({ onRegister }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const h = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', h, { passive: true });
+    return () => window.removeEventListener('scroll', h);
+  }, []);
+  return (
+    <header className={`sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-white'}`}>
+      <div className="mx-auto flex h-[60px] max-w-[1280px] items-center justify-between px-5 sm:px-8">
+        <a href="#" aria-label="Aerones">
+          <img src="assets/logo/aerones-logo-rgb.png" alt="Aerones" className="h-5 sm:h-[26px] w-auto" />
+        </a>
+        <nav className="hidden items-center gap-6 sm:flex" aria-label="Page sections">
+          {[['Overview','#overview'],['Agenda','#agenda'],['Speakers','#speakers'],['Venue','#venue'],['FAQ','#faq']].map(([l,h]) => (
+            <a key={l} href={h} className="text-[14px] text-ae-ink-700 hover:text-ae-dark-blue transition-colors duration-150">{l}</a>
+          ))}
+        </nav>
+        <button onClick={onRegister}
+          className="inline-flex items-center gap-2 rounded-full bg-ae-dark-blue px-4 py-2 text-[12px] font-medium text-white transition-colors hover:bg-ae-light-blue sm:px-5 sm:py-2.5 sm:text-[13px]">
+          Register to attend
+          <Icon name="arrow-right" size={13} stroke={2} />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+/* ── DateBar ── */
+function DateBar() {
+  return (
+    <div className="border-b border-ae-ink-100 bg-ae-ink-50">
+      <div className="mx-auto flex h-9 max-w-[1280px] items-center justify-between px-5 sm:px-8">
+        <span className="text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-500">Oct 28 · 2026</span>
+        <span className="text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-500">Aerones.com / Events</span>
+      </div>
+    </div>
+  );
+}
+
+/* ── Hero ── */
+function Hero({ onRegister }) {
+  return (
+    <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white"
+      style={{ backgroundImage: "url('assets/photos/Screenshot 2026-07-20 at 14.00.30.png')", backgroundSize: '175%', backgroundPosition: '55% 45%' }}>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0"
+        style={{ backgroundColor: 'rgba(13,35,65,0.58)' }} />
+      <div aria-hidden="true"
+        className="pointer-events-none absolute -right-[10%] top-1/2 hidden h-[120%] w-[70%] -translate-y-1/2 lg:block"
+        style={{ background: 'radial-gradient(60% 50% at 50% 50%, rgba(136,205,246,0.14) 0%, transparent 70%)' }} />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+        style={{ background: 'linear-gradient(to bottom, transparent, rgba(11,26,39,0.35))' }} />
+
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
+
+          {/* Left: text */}
+          <div className="flex-1 max-w-[600px]">
+            <div className="mb-6">
+              <img src="assets/photos/Aerones_event_branding_210126_v2-04.png"
+                alt="Aerones Annual Workshop & Demo Day"
+                className="w-auto" style={{ height: 'clamp(64px, 8vw, 100px)' }} />
+            </div>
+
+            <h1 className="mb-5 text-white leading-[1.1] tracking-[-0.02em]"
+              style={{ fontSize: 'clamp(36px, 5vw, 62px)', fontWeight: 300 }}>
+              The robotic solution to severe{' '}
+              <strong style={{ color: '#FC6722', fontWeight: 700, fontStyle: 'normal' }}>Leading Edge Erosion.</strong>
+            </h1>
+
+            <p className="mb-2 leading-relaxed text-white/90 font-medium sm:text-[17px]"
+              style={{ fontSize: 'clamp(15px, 1.6vw, 17px)', maxWidth: '540px' }}>
+              CAT4–5 erosion repairs that were once critically dangerous, expensive, and manual —
+              now fast, reliable, and safe.
+            </p>
+
+            <p className="mb-8 leading-relaxed text-white/60 sm:text-[15px]"
+              style={{ fontSize: 'clamp(13px, 1.4vw, 15px)', maxWidth: '520px' }}>
+              Come see the full system live at Aerones HQ in Riga — hardware demonstrations,
+              hands-on software sessions, and direct access to the engineers building it.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <button onClick={onRegister}
+                className="ae-save-pulse inline-flex items-center gap-2 rounded-full bg-ae-orange px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#e05510]">
+                Reserve my spot
+                <Icon name="arrow-right" size={14} stroke={2} />
+              </button>
+              <a href="#agenda"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10">
+                See the agenda
+              </a>
+            </div>
+          </div>
+
+          {/* Right: event card */}
+          <div className="hidden lg:block lg:w-[340px] shrink-0">
+            <div className="rounded-2xl border border-white/15 bg-white/10 p-7 backdrop-blur-sm">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#FC6722]/40 bg-[#FC6722]/15 px-3 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-[#FC6722]">
+                In-person event
+              </div>
+              <div className="space-y-4">
+                {[
+                  { icon: 'calendar', title: 'October 28, 2026',   sub: '09:00 – 17:00 EET' },
+                  { icon: 'map-pin',  title: 'Aerones HQ',          sub: 'Katlakalna iela 11E, Riga, Latvia' },
+                  { icon: 'users',    title: 'Limited capacity',     sub: '~40 participants · Registration required' },
+                ].map(({ icon, title, sub }) => (
+                  <div key={title} className="flex items-start gap-3">
+                    <Icon name={icon} size={15} stroke={1.75} className="mt-0.5 shrink-0 text-ae-sky-blue" />
+                    <div>
+                      <div className="text-[13px] font-medium text-white">{title}</div>
+                      <div className="text-[12px] text-white/50">{sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 border-t border-white/15 pt-5">
+                <div className="mb-3 text-[11px] font-medium uppercase tracking-eyebrow text-white/40">Format</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {['Live demos','Hands-on sessions','Q&A panel','Networking'].map(t =>
+                    <span key={t} className="rounded-sm bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/70">{t}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── TrustBar ── */
+function TrustBar() {
+  const stats = [
+    { target: 25000, suffix: '+', l: 'Turbines serviced' },
+    { target: 75000, suffix: '+', l: 'Blades inspected' },
+    { target: 35,    suffix: '',  l: 'Countries' },
+  ];
+  return (
+    <section className="border-y border-ae-ink-100 bg-ae-ice-blue/40">
+      <div className="mx-auto max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10">
+        <div className="grid grid-cols-1 items-center gap-y-6 sm:grid-cols-[1.4fr_1fr_1fr_1fr] sm:gap-x-8">
+          <div className="text-[13px] sm:text-[14px] text-ae-ink-700">
+            <Eyebrow className="mb-2">Trusted by wind operators worldwide</Eyebrow>
+            <div className="leading-[1.45] text-ae-ink-900">
+              Aerones services major operators — NextEra, GE Vernova, Vestas, Enel, Siemens Gamesa — and the OEMs behind them.
+            </div>
+          </div>
+          {stats.map((s, i) =>
+            <div key={i} className="border-t border-ae-ink-200 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
+              <div className="font-medium leading-none tracking-[-0.02em] text-ae-orange"
+                style={{ fontSize: 'clamp(30px, 3.6vw, 42px)' }}>
+                <CountUp target={s.target} suffix={s.suffix} />
+              </div>
+              <div className="mt-2 text-[12px] font-medium uppercase tracking-eyebrow text-ae-ink-500">{s.l}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── What to Expect ── */
+function WhatToExpect() {
+  const items = [
+    {
+      icon: 'cpu',
+      title: 'See the hardware live',
+      body: 'Watch Aerones inspection robots operate at our on-site facility. Real machines, real motion — not a video or a render.',
+    },
+    {
+      icon: 'monitor',
+      title: 'Hands-on with the software',
+      body: 'Guided sessions through Customer Portal, Visual Inspection Studio, and the AI planning tools — using real turbine data.',
+    },
+    {
+      icon: 'users',
+      title: 'Meet the team building it',
+      body: 'Direct conversations with engineers, data scientists, and product managers. Bring your toughest integration and workflow questions.',
+    },
+  ];
+  return (
+    <section className="bg-white">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mb-12 max-w-2xl">
+          <Eyebrow>What to expect</Eyebrow>
+          <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
+            style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
+            A full day at the home of Aerones.
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+          {items.map((it, i) =>
+            <div key={i} className="border-t border-ae-ink-200 pt-6">
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-ae-orange/10 text-ae-orange">
+                <Icon name={it.icon} size={22} stroke={1.75} />
+              </div>
+              <h3 className="mb-2 text-[17px] font-medium text-ae-ink-900">{it.title}</h3>
+              <p className="text-[14px] leading-relaxed text-ae-ink-700">{it.body}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Agenda ── */
+function Agenda() {
+  const morning = [
+    { time: '09:00', dur: '30 min', title: 'Arrival and coffee',                                          dim: true },
+    { time: '09:30', dur: '10 min', title: 'Welcome and HSE introduction' },
+    { time: '09:40', dur: '20 min', title: 'State of robotic blade leading edge repairs' },
+    { time: '10:00', dur: '20 min', title: 'How AI changes blade repair planning and execution' },
+    { time: '10:20', dur: '20 min', title: 'Safety with every step' },
+    { time: '10:40', dur: '10 min', title: 'Break',                                                       dim: true },
+    { time: '10:50', dur: '20 min', title: 'VESTAS case study',                     badge: 'Case study' },
+    { time: '11:10', dur: '10 min', title: 'Q&A session' },
+    { time: '11:20', dur: '20 min', title: 'Videos from field' },
+    { time: '11:40', dur: '30 min', title: 'Facility tour',                         badge: 'Tour',
+      body: 'Production · Assembly · Testing · R&D · Operations' },
+    { time: '12:10', dur: '50 min', title: 'Lunch break',                                                 dim: true },
+  ];
+
+  const afternoon = [
+    { time: '13:00', dur: '60 min', title: 'LER demo — blade grinding and filler application',   badge: 'Live demo' },
+    { time: '14:00', dur: '30 min', title: 'Customer platform, analytics & Visual Inspection Studio', badge: 'Demo' },
+    { time: '14:30', dur: '10 min', title: 'Q&A session' },
+    { time: '14:40', dur: '40 min', title: 'Rotating demo sessions',                             badge: 'Live demo',
+      body: 'LPS inspections · Internal inspections · Drone inspections · Software showcase · Hontek mixing process + LAB' },
+    { time: '15:20', dur: '40 min', title: 'LER demo — LEP application and final results',       badge: 'Live demo' },
+    { time: '16:00', dur: '30 min', title: 'Q&A and networking' },
+    { time: '16:30', dur: '5 min',  title: 'Final thank you' },
+    { time: '16:35', dur: '10 min', title: 'Photoshoot' },
+    { time: '16:45', dur: '45 min', title: 'Networking & entertainment' },
+  ];
+
+  const evening = [
+    { time: '17:30', dur: '30 min', title: 'Departure to dinner venue',                                   dim: true },
+    { time: '18:30', dur: '—',      title: 'Dinner' },
+  ];
+
+  const Block = ({ label, rows }) => (
+    <div>
+      <div className="mb-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-400">{label}</div>
+      <ol>
+        {rows.map((r, i) => (
+          <li key={i} className={`grid grid-cols-[80px_1fr] gap-x-6 border-b border-ae-ink-200 py-4 last:border-0 transition-opacity ${r.dim ? 'opacity-50' : ''}`}>
+            <div className="pt-0.5 shrink-0">
+              <div className="text-[14px] font-medium tabular-nums text-ae-orange">{r.time}</div>
+              {r.dur && <div className="mt-0.5 text-[10px] uppercase tracking-eyebrow text-ae-ink-400">{r.dur}</div>}
+            </div>
+            <div>
+              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span className="text-[15px] font-medium text-ae-ink-900 leading-snug">{r.title}</span>
+                {r.badge && (
+                  <span className={`inline-flex shrink-0 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-eyebrow ${
+                    r.badge === 'Live demo'
+                      ? 'bg-[#FC6722]/15 text-[#FC6722]'
+                      : 'bg-ae-dark-blue/10 text-ae-dark-blue'
+                  }`}>{r.badge}</span>
+                )}
+              </div>
+              {r.body && <p className="mt-1 text-[12px] leading-relaxed text-ae-ink-500">{r.body}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+
+  return (
+    <section id="agenda" className="relative overflow-hidden bg-ae-ink-50">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        className="pointer-events-none absolute inset-y-0 right-0 h-full"
+        style={{ width: '55%', opacity: 0.08,
+          maskImage: 'linear-gradient(to right, transparent 0%, black 40%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%)' }}
+        viewBox="0 0 700 900" preserveAspectRatio="xMidYMax meet">
+        <g fill="#1C67A1">
+          <path d="M491 900 L497 440 L503 440 L509 900Z"/>
+          <g transform="translate(500,438) rotate(12)">
+            <circle r="11"/><ellipse rx="9" ry="78" cy="-78"/>
+            <ellipse rx="9" ry="78" cy="-78" transform="rotate(120)"/>
+            <ellipse rx="9" ry="78" cy="-78" transform="rotate(240)"/>
+          </g>
+          <path d="M215 900 L219 570 L223 570 L227 900Z"/>
+          <g transform="translate(221,568) rotate(-10)">
+            <circle r="8"/><ellipse rx="6" ry="56" cy="-56"/>
+            <ellipse rx="6" ry="56" cy="-56" transform="rotate(120)"/>
+            <ellipse rx="6" ry="56" cy="-56" transform="rotate(240)"/>
+          </g>
+          <path d="M613 900 L615 682 L618 682 L620 900Z"/>
+          <g transform="translate(616,680) rotate(27)">
+            <circle r="5.5"/><ellipse rx="4.5" ry="40" cy="-40"/>
+            <ellipse rx="4.5" ry="40" cy="-40" transform="rotate(120)"/>
+            <ellipse rx="4.5" ry="40" cy="-40" transform="rotate(240)"/>
+          </g>
+          <path d="M83 900 L85 748 L87 748 L89 900Z"/>
+          <g transform="translate(86,746) rotate(-5)">
+            <circle r="3.5"/><ellipse rx="3" ry="26" cy="-26"/>
+            <ellipse rx="3" ry="26" cy="-26" transform="rotate(120)"/>
+            <ellipse rx="3" ry="26" cy="-26" transform="rotate(240)"/>
+          </g>
+          <rect x="0" y="898" width="700" height="2"/>
+        </g>
+      </svg>
+
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr] lg:gap-16">
+          <div>
+            <Eyebrow>Agenda</Eyebrow>
+            <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
+              style={{ fontSize: 'clamp(26px, 3.2vw, 38px)' }}>
+              One full day, fully structured.
+            </h2>
+            <p className="mt-4 text-[14px] leading-relaxed text-ae-ink-700">
+              Presentations, live hardware demos, facility tour, hands-on sessions, and dinner.
+              09:00 to 18:30+.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['Live demos','Facility tour','Q&A','Lunch & dinner'].map(t =>
+                <span key={t} className="inline-flex items-center gap-1.5 rounded-sm bg-white px-2.5 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-700 ring-1 ring-ae-ink-200">
+                  <Icon name="check" size={11} stroke={2.5} className="text-ae-orange" />{t}
+                </span>
+              )}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-sm bg-[#FC6722]/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-eyebrow text-[#FC6722]">
+                ● Live demo
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-sm bg-ae-dark-blue/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-eyebrow text-ae-dark-blue">
+                Demo / Tour / Case study
+              </span>
+            </div>
+          </div>
+          <div className="space-y-10">
+            <Block label="Morning" rows={morning} />
+            <Block label="Afternoon" rows={afternoon} />
+            <Block label="Evening" rows={evening} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Videos ── */
+function Videos() {
+  const videos = [
+    {
+      id: '9lB94V5GhaA',
+      label: 'Previous event',
+      title: 'See how it looked at our first Workshop & Demo Day in the USA',
+    },
+    {
+      id: '_dF1X4uqi98',
+      label: 'Riga preview',
+      title: 'See what to expect from Riga',
+    },
+  ];
+  return (
+    <section id="videos" className="bg-ae-ink-900">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mb-12">
+          <Eyebrow className="!text-ae-sky-blue">Videos</Eyebrow>
+          <h2 className="mt-6 font-bold text-white leading-[1.15]"
+            style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
+            See it before you come.
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {videos.map((v) => (
+            <div key={v.id}>
+              <div className="mb-3 flex items-center gap-2">
+                <span className="rounded-sm bg-ae-dark-blue/60 px-2.5 py-1 text-[10px] font-medium uppercase tracking-eyebrow text-ae-sky-blue">
+                  {v.label}
+                </span>
+              </div>
+              <div className="relative w-full overflow-hidden rounded-xl" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src={`https://www.youtube.com/embed/${v.id}`}
+                  title={v.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <p className="mt-3 text-[14px] leading-snug text-white/60">{v.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Speakers ── */
+function Speakers() {
+  const people = [
+    {
+      photo: null,
+      initials: 'AC',
+      name: 'Andis Cīrulis',
+      role: 'VP of Data, Aerones',
+      bio: "Andis leads Aerones' data and AI organization, turning years of high-resolution wind turbine inspection data into the predictive models and planning tools used by operators worldwide.",
+      tags: ['Data & AI', 'Predictive models', 'Asset planning'],
+    },
+    {
+      photo: null,
+      initials: 'NH',
+      name: 'Nauris Horsts',
+      role: 'Software Product Manager, Aerones',
+      bio: "Nauris leads product for Aerones' Customer Portal and Visual Inspection Studio. He partners with wind operators and OEMs to shape the workflows behind fleet inspections, defect tracking, and reporting.",
+      tags: ['Customer Portal', 'Visual Inspection Studio', 'OEM workflows'],
+    },
+  ];
+  return (
+    <section id="speakers" className="bg-white">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mb-12 max-w-2xl">
+          <Eyebrow>Speakers</Eyebrow>
+          <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
+            style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
+            The team building it, on the floor.
+          </h2>
+          <p className="mt-3 text-[15px] text-ae-ink-700">
+            More speakers to be confirmed. Full list shared with registered attendees.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+          {people.map((p, i) =>
+            <article key={i} className="flex gap-6">
+              <div className="h-[80px] w-[80px] shrink-0 overflow-hidden rounded-lg bg-ae-orange/10 flex items-center justify-center text-ae-orange font-bold text-[22px]">
+                {p.photo
+                  ? <img src={p.photo} alt={p.name} className="h-full w-full object-cover" />
+                  : p.initials}
+              </div>
+              <div>
+                <div className="text-[18px] font-medium text-ae-ink-900">{p.name}</div>
+                <div className="mb-3 text-[13px] font-medium text-ae-orange">{p.role}</div>
+                <p className="text-[13px] leading-relaxed text-ae-ink-700">{p.bio}</p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {p.tags.map((t, j) =>
+                    <span key={j} className="rounded-sm bg-ae-ink-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-700 ring-1 ring-ae-ink-200">{t}</span>
+                  )}
+                </div>
+              </div>
+            </article>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Venue ── */
+function Venue() {
+  return (
+    <section id="venue" className="bg-ae-dark-blue text-white">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
+          <div>
+            <Eyebrow className="!text-ae-sky-blue">Venue</Eyebrow>
+            <h2 className="mt-6 font-bold text-white leading-[1.15]"
+              style={{ fontSize: 'clamp(24px, 2.8vw, 36px)' }}>
+              Aerones HQ, Riga
+            </h2>
+            <p className="mt-4 text-[14px] leading-relaxed text-white/70 max-w-md">
+              Our headquarters in Riga houses engineering teams, testing facilities, and the full hardware and software stack. You'll see the real operation — not a showroom.
+            </p>
+            <div className="mt-8 space-y-4">
+              {[
+                { icon: 'map-pin', label: 'Address',       detail: 'Katlakalna iela 11E, Riga, LV-1073, Latvia' },
+                { icon: 'clock',   label: 'Hours',         detail: 'Doors open 08:45. Event 09:00 – 17:00 EET' },
+                { icon: 'wifi',    label: 'Getting there', detail: '~20 min from Riga city centre. On-site parking available. Directions sent on registration confirmation.' },
+                { icon: 'coffee',  label: 'Catering',      detail: 'Morning coffee, lunch, afternoon refreshments included.' },
+              ].map(({ icon, label, detail }) => (
+                <div key={label} className="flex items-start gap-3 text-[14px]">
+                  <Icon name={icon} size={16} stroke={1.75} className="mt-0.5 shrink-0 text-ae-sky-blue" />
+                  <div>
+                    <span className="font-medium text-white">{label}: </span>
+                    <span className="text-white/65">{detail}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-xl border border-white/20" style={{ aspectRatio: '4/3' }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1937.9337168527825!2d24.198244430651663!3d56.930546149434434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46eecdf3e8fb23ed%3A0xc654f2cdf8c29b01!2sAerones!5e0!3m2!1sen!2slv!4v1784546291584!5m2!1sen!2slv"
+              width="100%" height="100%"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Aerones HQ, Riga"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Register ── */
+function Register() {
+  useEffect(() => {
+    if (document.querySelector('script[src="https://webforms.pipedrive.com/f/loader"]')) return;
+    const script = document.createElement('script');
+    script.src = 'https://webforms.pipedrive.com/f/loader';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  return (
+    <section id="register" className="relative overflow-hidden bg-ae-ink-50 text-ae-ink-900">
+      <div aria-hidden="true"
+        className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[120%] w-[55%] -translate-y-1/2 lg:block"
+        style={{ background: 'radial-gradient(55% 45% at 30% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_540px] lg:gap-16 lg:items-start">
+          <div>
+            <img src="assets/photos/Aerones_event_branding_210126_v2-06.png"
+              alt="Aerones Annual Workshop & Demo Day"
+              className="mb-5 w-auto" style={{ height: '52px' }} />
+            <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
+              style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
+              Reserve your spot at the workshop.
+            </h2>
+            <p className="mt-4 max-w-sm text-[15px] text-ae-ink-700">
+              Free to attend. Capacity is limited to ~40 participants. A confirmation with venue details and preparation notes will be sent on registration.
+            </p>
+            <div className="mt-8 space-y-3 text-[14px] text-ae-ink-700">
+              {[
+                { icon: 'calendar', text: 'October 28, 2026' },
+                { icon: 'clock',    text: '09:00 – 17:00 EET' },
+                { icon: 'map-pin',  text: 'Aerones HQ, Katlakalna iela 11E, Riga' },
+                { icon: 'coffee',   text: 'Lunch & refreshments included' },
+                { icon: 'layers',   text: 'Bring your laptop for hands-on sessions' },
+              ].map(({ icon, text }) => (
+                <div key={text} className="flex items-center gap-3">
+                  <Icon name={icon} size={15} stroke={1.75} className="text-ae-orange shrink-0" />
+                  {text}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className="pipedriveWebForms"
+            data-pd-webforms="https://webforms.pipedrive.com/f/30XwnKR1Je4YtEmjbNN4enAk3cuNJOuEgI4EpURgUB0RmFLzlCo083gYKujkWhP9x"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── FAQ ── */
+function FAQItem({ q, a }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`border-b border-ae-ink-200 ${open ? 'ae-faq-open' : ''}`}>
+      <button onClick={() => setOpen(o => !o)} aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 py-5 text-left">
+        <span className="text-[16px] font-medium leading-snug text-ae-ink-900 sm:text-[18px]">{q}</span>
+        <span className="ae-faq-chev mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ae-orange/30 text-ae-orange">
+          <Icon name="chevron-down" size={16} stroke={2} />
+        </span>
+      </button>
+      {open && <div className="max-w-2xl pb-5 text-[14px] leading-relaxed text-ae-ink-700">{a}</div>}
+    </div>
+  );
+}
+
+function FAQ() {
+  const items = [
+    { q: 'Who should attend?',
+      a: 'Wind farm operators, asset managers, OEM service teams, and anyone responsible for turbine inspection programs or maintenance planning. The day is hands-on and technical — we go beyond the marketing pitch.' },
+    { q: 'Is there a cost to attend?',
+      a: 'No. The workshop is free to attend. Lunch and refreshments throughout the day are included.' },
+    { q: 'How do I get to Aerones HQ?',
+      a: 'Aerones HQ is at Katlakalna iela 11E, Riga, LV-1073 — approximately 20 minutes from Riga city centre by car. On-site parking is available. Detailed directions and public transport options are included in your registration confirmation.' },
+    { q: 'Will I get hands-on access to the software?',
+      a: "Yes. The afternoon includes structured hands-on sessions where you'll work directly in the Customer Portal and data tools using prepared datasets. Bring your laptop." },
+    { q: 'Can I bring colleagues?',
+      a: 'Yes. We encourage teams to attend together. Please register each participant individually so we can manage capacity. Total capacity is ~40 participants.' },
+    { q: 'Will sessions be recorded?',
+      a: "The hardware demonstrations and product walkthrough will not be available as recordings. Registered attendees will receive a post-event summary and access to selected materials." },
+  ];
+  return (
+    <section id="faq" className="bg-white">
+      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[280px_1fr] lg:gap-16">
+          <div>
+            <Eyebrow>FAQ</Eyebrow>
+            <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
+              style={{ fontSize: 'clamp(24px, 2.8vw, 34px)' }}>
+              Common questions.
+            </h2>
+            <p className="mt-3 text-[14px] text-ae-ink-700">
+              Anything else?{' '}
+              <a href="mailto:info@aerones.com" className="text-ae-dark-blue underline hover:text-ae-light-blue">
+                Email info@aerones.com
+              </a>{' '}
+              and we'll get back to you the same working day.
+            </p>
+          </div>
+          <div>
+            {items.map((it, i) => <FAQItem key={i} {...it} />)}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Footer ── */
+function Footer() {
+  return (
+    <footer className="bg-ae-ink-900 text-white">
+      <div className="mx-auto max-w-[1280px] px-5 py-12 sm:px-8 sm:py-16">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-[1.5fr_1fr_1fr_1fr]">
+          <div className="col-span-2 sm:col-span-1">
+            <img src="assets/logo/aerones-logo-white.png" alt="Aerones" className="mb-3 h-6 w-auto" />
+            <img src="assets/photos/Aerones_event_branding_210126_v2-07.png"
+              alt="Aerones Annual Workshop & Demo Day"
+              className="mb-4 w-auto" style={{ height: '56px' }} />
+            <p className="mb-4 text-[13px] leading-relaxed text-white/50">
+              Robot-enabled wind turbine maintenance and inspections. Serving operators that represent over 50% of global wind capacity.
+            </p>
+            <div className="flex gap-4">
+              {['LinkedIn','YouTube','Facebook','Instagram'].map(s =>
+                <a key={s} href="#" className="text-[13px] text-white/35 hover:text-white/80 transition-colors">{s}</a>
+              )}
+            </div>
+          </div>
+          <div>
+            <div className="mb-4 text-[11px] font-medium uppercase tracking-eyebrow text-white/35">Contacts</div>
+            <div className="space-y-3 text-[13px] text-white/50">
+              <div><div className="font-medium text-white/75">USA HQ</div><div>1800 Shady Oaks Dr</div><div>Denton, TX 76205</div><div>+1 669 213 80 50</div></div>
+              <div><div className="font-medium text-white/75">EU HQ</div><div>Katlakalna iela 11E</div><div>Riga, Latvia, LV-1073</div><div>+371 2809 0999</div></div>
+            </div>
+          </div>
+          <div>
+            <div className="mb-4 text-[11px] font-medium uppercase tracking-eyebrow text-white/35">Event</div>
+            <div className="space-y-2 text-[13px] text-white/50">
+              {['Overview','Agenda','Speakers','Venue','Register','FAQ'].map(l =>
+                <div key={l}><a href={`#${l.toLowerCase()}`} className="hover:text-white/90 transition-colors">{l}</a></div>
+              )}
+            </div>
+          </div>
+          <div>
+            <div className="mb-4 text-[11px] font-medium uppercase tracking-eyebrow text-white/35">Company</div>
+            <div className="space-y-2 text-[13px] text-white/50">
+              {['About','Careers','Press','Privacy policy'].map(l =>
+                <div key={l}><a href="#" className="hover:text-white/90 transition-colors">{l}</a></div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8 text-[12px] text-white/25">
+          <span>© 2026 Aerones Engineering</span>
+          <span>AERONES.COM</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ── App ── */
+function App() {
+  const scrollToRegister = () => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
+  return (
+    <div>
+      <Nav onRegister={scrollToRegister} />
+      <DateBar />
+      <main>
+        <Hero onRegister={scrollToRegister} />
+        <TrustBar />
+        <WhatToExpect />
+        <Agenda />
+        <Videos />
+        <Speakers />
+        <Register />
+        <Venue />
+        <FAQ />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
