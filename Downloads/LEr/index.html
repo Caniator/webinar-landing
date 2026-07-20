@@ -366,34 +366,13 @@ function Agenda() {
     { time: '18:30', dur: '—',      title: 'Dinner' },
   ];
 
-  const Block = ({ label, rows }) => (
-    <div>
-      <div className="mb-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-400">{label}</div>
-      <ol>
-        {rows.map((r, i) => (
-          <li key={i} className={`grid grid-cols-[80px_1fr] gap-x-6 border-b border-ae-ink-200 py-4 last:border-0 transition-opacity ${r.dim ? 'opacity-50' : ''}`}>
-            <div className="pt-0.5 shrink-0">
-              <div className="text-[14px] font-medium tabular-nums text-ae-orange">{r.time}</div>
-              {r.dur && <div className="mt-0.5 text-[10px] uppercase tracking-eyebrow text-ae-ink-400">{r.dur}</div>}
-            </div>
-            <div>
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span className="text-[15px] font-medium text-ae-ink-900 leading-snug">{r.title}</span>
-                {r.badge && (
-                  <span className={`inline-flex shrink-0 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-eyebrow ${
-                    r.badge === 'Live demo'
-                      ? 'bg-[#FC6722]/15 text-[#FC6722]'
-                      : 'bg-ae-dark-blue/10 text-ae-dark-blue'
-                  }`}>{r.badge}</span>
-                )}
-              </div>
-              {r.body && <p className="mt-1 text-[12px] leading-relaxed text-ae-ink-500">{r.body}</p>}
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
+  const tabs = [
+    { label: 'Morning',   subtitle: '09:00 – 13:00', rows: morning },
+    { label: 'Afternoon', subtitle: '13:00 – late',  rows: [...afternoon, ...evening] },
+  ];
+
+  const [activeTab, setActiveTab] = React.useState(0);
+  const active = tabs[activeTab];
 
   return (
     <section id="agenda" className="relative overflow-hidden bg-ae-ink-50">
@@ -460,10 +439,52 @@ function Agenda() {
               </span>
             </div>
           </div>
-          <div className="space-y-10">
-            <Block label="Morning" rows={morning} />
-            <Block label="Afternoon" rows={afternoon} />
-            <Block label="Evening" rows={evening} />
+
+          <div>
+            {/* Tab bar */}
+            <div className="mb-6 flex gap-1 rounded-lg bg-ae-ink-200/60 p-1" role="tablist">
+              {tabs.map((t, i) => (
+                <button
+                  key={t.label}
+                  role="tab"
+                  aria-selected={i === activeTab}
+                  onClick={() => setActiveTab(i)}
+                  className={`flex-1 rounded-md px-4 py-2.5 text-left transition-all ${
+                    i === activeTab
+                      ? 'bg-white shadow-sm'
+                      : 'hover:bg-white/50'
+                  }`}
+                >
+                  <div className={`text-[13px] font-semibold leading-none ${i === activeTab ? 'text-ae-ink-900' : 'text-ae-ink-500'}`}>{t.label}</div>
+                  <div className={`mt-1 text-[11px] tabular-nums ${i === activeTab ? 'text-ae-orange' : 'text-ae-ink-400'}`}>{t.subtitle}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* Tab panel */}
+            <ol>
+              {active.rows.map((r, i) => (
+                <li key={i} className={`grid grid-cols-[80px_1fr] gap-x-6 border-b border-ae-ink-200 py-4 last:border-0 transition-opacity ${r.dim ? 'opacity-50' : ''}`}>
+                  <div className="pt-0.5 shrink-0">
+                    <div className="text-[14px] font-medium tabular-nums text-ae-orange">{r.time}</div>
+                    {r.dur && <div className="mt-0.5 text-[10px] uppercase tracking-eyebrow text-ae-ink-400">{r.dur}</div>}
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <span className="text-[15px] font-medium text-ae-ink-900 leading-snug">{r.title}</span>
+                      {r.badge && (
+                        <span className={`inline-flex shrink-0 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-eyebrow ${
+                          r.badge === 'Live demo'
+                            ? 'bg-[#FC6722]/15 text-[#FC6722]'
+                            : 'bg-ae-dark-blue/10 text-ae-dark-blue'
+                        }`}>{r.badge}</span>
+                      )}
+                    </div>
+                    {r.body && <p className="mt-1 text-[12px] leading-relaxed text-ae-ink-500">{r.body}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>
