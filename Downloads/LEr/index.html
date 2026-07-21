@@ -278,22 +278,22 @@ function TrustBar() {
     { target: 35,    suffix: '',  l: 'Countries' },
   ];
   return (
-    <section className="bg-ae-dark-blue">
+    <section style={{ background: 'rgba(252,103,34,0.07)', borderTop: '1px solid rgba(252,103,34,0.15)', borderBottom: '1px solid rgba(252,103,34,0.15)' }}>
       <div className="mx-auto max-w-[1280px] px-5 py-8 sm:px-8 sm:py-10">
         <div className="grid grid-cols-1 items-center gap-y-6 sm:grid-cols-[1.4fr_1fr_1fr_1fr] sm:gap-x-8">
-          <div className="text-[13px] sm:text-[14px]" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <div className="text-[13px] sm:text-[14px] text-ae-ink-700">
             <Eyebrow className="mb-2">Trusted by wind operators worldwide</Eyebrow>
-            <div className="leading-[1.45]" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            <div className="leading-[1.45] text-ae-ink-900">
               Aerones services major operators - NextEra, GE Vernova, Vestas, Enel, Siemens Gamesa - and the OEMs behind them.
             </div>
           </div>
           {stats.map((s, i) =>
-            <div key={i} className="border-t pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+            <div key={i} className="border-t pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0" style={{ borderColor: 'rgba(252,103,34,0.2)' }}>
               <div className="font-medium leading-none tracking-[-0.02em] text-ae-orange"
                 style={{ fontSize: 'clamp(30px, 3.6vw, 42px)' }}>
                 <CountUp target={s.target} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-[12px] font-medium uppercase tracking-eyebrow" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.l}</div>
+              <div className="mt-2 text-[12px] font-medium uppercase tracking-eyebrow text-ae-ink-500">{s.l}</div>
             </div>
           )}
         </div>
