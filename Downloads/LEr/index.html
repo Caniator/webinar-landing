@@ -164,10 +164,26 @@ function DateBar() {
 /* ── Hero ── */
 function Hero({ onRegister }) {
   return (
-    <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white"
-      style={{ backgroundImage: "url('assets/photos/Screenshot 2026-07-20 at 14.00.30.png')", backgroundSize: '175%', backgroundPosition: '55% 45%' }}>
+    <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white">
+      {/* YouTube background video */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <iframe
+          src="https://www.youtube.com/embed/9lB94V5GhaA?autoplay=1&mute=1&loop=1&playlist=9lB94V5GhaA&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&cc_load_policy=3&disablekb=1&fs=0"
+          allow="autoplay; encrypted-media"
+          style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '177.78vh',
+            height: '56.25vw',
+            minWidth: '100%',
+            minHeight: '100%',
+            border: 'none',
+          }}
+        />
+      </div>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0"
-        style={{ backgroundColor: 'rgba(13,35,65,0.58)' }} />
+        style={{ backgroundColor: 'rgba(13,35,65,0.62)' }} />
       <div aria-hidden="true"
         className="pointer-events-none absolute -right-[10%] top-1/2 hidden h-[120%] w-[70%] -translate-y-1/2 lg:block"
         style={{ background: 'radial-gradient(60% 50% at 50% 50%, rgba(136,205,246,0.14) 0%, transparent 70%)' }} />
