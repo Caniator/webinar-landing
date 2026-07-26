@@ -156,6 +156,7 @@ function Hero({ onRegister }) {
     <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white">
       {/* YouTube background video */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '12%', background: 'linear-gradient(to bottom, transparent, #13263A)', zIndex: 1 }} />
         <iframe
           src="https://www.youtube.com/embed/9lB94V5GhaA?autoplay=1&mute=1&loop=1&playlist=9lB94V5GhaA&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&cc_load_policy=0&disablekb=1&fs=0"
           allow="autoplay; encrypted-media"
