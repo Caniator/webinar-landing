@@ -339,38 +339,41 @@ function WhatToExpect() {
 /* ── Agenda ── */
 function Agenda() {
   const morning = [
-    { time: '09:00', dur: '30 min', title: 'Arrival and coffee',                                          dim: true },
-    { time: '09:30', dur: '10 min', title: 'Welcome and HSE introduction' },
-    { time: '09:40', dur: '20 min', title: 'State of robotic blade leading edge repairs' },
-    { time: '10:00', dur: '20 min', title: 'How AI changes blade repair planning and execution' },
-    { time: '10:20', dur: '20 min', title: 'Safety with every step' },
-    { time: '10:40', dur: '10 min', title: 'Break',                                                       dim: true },
-    { time: '10:50', dur: '20 min', title: 'Panel discussion',                      badge: 'Panel' },
-    { time: '11:10', dur: '10 min', title: 'Q&A session' },
-    { time: '11:20', dur: '20 min', title: 'Videos from field' },
-    { time: '11:40', dur: '30 min', title: 'Facility tour',                         badge: 'Tour',
+    { time: '09:00', dur: '30 min', title: 'Arrival and Coffee',                                                       dim: true },
+    { time: '09:30', dur: '10 min', title: 'Welcome and HSE Introduction' },
+    { time: '09:40', dur: '20 min', title: 'State of Robotic Blade Leading Edge Repairs' },
+    { time: '10:00', dur: '20 min', title: 'How AI Changes Blade Repair Planning and Execution + CAT4' },
+    { time: '10:20', dur: '10 min', title: 'Coffee Break',                                                              dim: true },
+    { time: '10:30', dur: '15 min', title: 'Videos from the Field' },
+    { time: '10:45', dur: '50 min', title: 'LER Demo – Part 1: Blade Grinding and Filler Application', badge: 'Live demo' },
+    { time: '11:35', dur: '10 min', title: 'LER Q&A Session' },
+    { time: '11:45', dur: '30 min', title: 'Facility Tour',                                             badge: 'Tour',
       body: 'Production · Assembly · Testing · R&D · Operations' },
-    { time: '12:10', dur: '50 min', title: 'Lunch break',                                                 dim: true },
+    { time: '12:15', dur: '60 min', title: 'Lunch Break',                                                               dim: true },
   ];
 
   const afternoon = [
-    { time: '13:00', dur: '60 min', title: 'LER demo - blade grinding and filler application',   badge: 'Live demo' },
-    { time: '14:00', dur: '30 min', title: 'Customer platform, analytics & Visual Inspection Studio', badge: 'Demo' },
-    { time: '14:30', dur: '10 min', title: 'Q&A session' },
-    { time: '14:40', dur: '40 min', title: 'Rotating demo sessions',                             badge: 'Live demo',
-      body: 'LPS inspections · Internal inspections · Drone inspections · Software showcase · Hontek mixing process + LAB' },
-    { time: '15:20', dur: '40 min', title: 'LER demo - LEP application and final results',       badge: 'Live demo' },
-    { time: '16:00', dur: '30 min', title: 'Q&A and networking' },
-    { time: '16:30', dur: '60 min', title: 'Networking & entertainment', body: 'Final thank you · Photoshoot · Networking' },
+    { time: '13:15', dur: '75 min', title: 'CAT4 Demo Session',                                          badge: 'Live demo' },
+    { time: '14:30', dur: '10 min', title: 'CAT4 Q&A Session' },
+    { time: '14:40', dur: '20 min', title: 'Customer Platform, Analytics & Visual Inspection Studio Demonstration', badge: 'Demo' },
+    { time: '15:00', dur: '10 min', title: 'Q&A Session' },
+    { time: '15:10', dur: '40 min', title: 'Rotating Demo Sessions',                                     badge: 'Live demo',
+      body: 'Lightning Protection System · Internal Inspections · Drone Inspections · Software Showcase · Hontek Mixing Process & Lab' },
+    { time: '15:50', dur: '30 min', title: 'LER Demo – Part 2: LEP Application and Final Results',       badge: 'Live demo' },
+    { time: '16:20', dur: '10 min', title: 'Q&A and Networking' },
+    { time: '16:30', dur: '5 min',  title: 'Final Thank You' },
+    { time: '16:35', dur: '10 min', title: 'Group Photoshoot' },
+    { time: '16:45', dur: '45 min', title: 'Networking & Entertainment' },
+    { time: '17:30', dur: '30 min', title: 'Departure to Dinner Venue' },
   ];
 
   const evening = [
-    { time: '18:30', dur: '-',      title: 'Dinner' },
+    { time: '18:30', dur: '–',      title: 'Dinner & Evening Program' },
   ];
 
   const tabs = [
-    { label: 'Morning',   subtitle: '09:00 – 13:00', rows: morning },
-    { label: 'Afternoon', subtitle: '13:00 – late',  rows: [...afternoon, ...evening] },
+    { label: 'Morning',   subtitle: '09:00 – 13:15', rows: morning },
+    { label: 'Afternoon', subtitle: '13:15 – late',  rows: [...afternoon, ...evening] },
   ];
 
   const [activeTab, setActiveTab] = React.useState(0);
