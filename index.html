@@ -231,7 +231,7 @@ function WhatToExpect() {
 function LiveStream({ onRegister }) {
   // 09:30 EET on Oct 28 = 07:30 UTC (Latvia is UTC+2 after DST ends Oct 25)
   const TARGET = new Date('2026-10-28T07:30:00Z');
-  const STREAM_ID = 'PASTE_YOUTUBE_LIVE_ID_HERE'; // ← replace with actual YouTube live stream ID
+  const STREAM_ID = 'eGb_SQ40Mx8'; // YouTube live stream ID
   const isPlaceholder = STREAM_ID.startsWith('PASTE');
 
   function calcTime() {
@@ -327,7 +327,8 @@ function LiveStream({ onRegister }) {
               <iframe
                 className="absolute inset-0 h-full w-full border-0"
                 src={`https://www.youtube.com/embed/${STREAM_ID}?autoplay=0&rel=0&modestbranding=1&playsinline=1`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
                 title="Aerones Workshop & Demo Day – Live Stream"
               />
