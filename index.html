@@ -135,7 +135,7 @@ function Nav({ onRegister }) {
           <img src="assets/logo/aerones-logo-rgb.png" alt="Aerones" className="h-5 sm:h-[26px] w-auto" />
         </a>
         <nav className="hidden items-center gap-6 sm:flex" aria-label="Page sections">
-          {[['Overview','#overview'],['Agenda','#agenda'],['Speakers','#speakers'],['Venue','#venue'],['FAQ','#faq']].map(([l,h]) => (
+          {[['Overview','#overview'],['Live','#livestream'],['Agenda','#agenda'],['Speakers','#speakers'],['Venue','#venue'],['FAQ','#faq']].map(([l,h]) => (
             <a key={l} href={h} className="text-[14px] text-ae-ink-700 hover:text-ae-dark-blue transition-colors duration-150">{l}</a>
           ))}
         </nav>
@@ -330,6 +330,83 @@ function WhatToExpect() {
               <p className="text-[14px] leading-relaxed text-ae-ink-700">{it.body}</p>
             </div>
           )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Live Stream ── */
+function LiveStream() {
+  // 09:30 EET on Oct 28 = 07:30 UTC (Latvia is UTC+2 after DST ends Oct 25)
+  const TARGET = new Date('2026-10-28T07:30:00Z');
+  const STREAM_ID = 'PASTE_YOUTUBE_LIVE_ID_HERE'; // ← replace with actual YouTube live stream ID
+  const isPlaceholder = STREAM_ID.startsWith('PASTE');
+
+  function calcTime() {
+    const diff = Math.max(0, TARGET - Date.now());
+    return {
+      days:    Math.floor(diff / 86400000),
+      hours:   Math.floor((diff % 86400000) / 3600000),
+      minutes: Math.floor((diff % 3600000) / 60000),
+      seconds: Math.floor((diff % 60000) / 1000),
+      started: diff <= 0,
+    };
+  }
+
+  const [left, setLeft] = React.useState(calcTime);
+  React.useEffect(() => {
+    const t = setInterval(() => setLeft(calcTime()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section id="livestream" className="bg-ae-ink-900 text-white py-16 sm:py-24">
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+        {/* heading */}
+        <div className="mb-10 text-center">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <span className="ae-dot-pulse inline-block h-2.5 w-2.5 rounded-full bg-red-500" />
+            <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-red-400">Live Stream</span>
+          </div>
+          <h2 className="text-[28px] sm:text-[36px] font-medium tracking-tight">Watch the Event Live</h2>
+          <p className="mt-2 text-[15px] text-white/50">October 28 · 09:30 – 17:00 EET · Aerones HQ, Riga</p>
+        </div>
+
+        {/* countdown */}
+        {!left.started && (
+          <div className="mb-12 flex justify-center gap-3 sm:gap-5">
+            {[['Days', left.days], ['Hours', left.hours], ['Min', left.minutes], ['Sec', left.seconds]].map(([label, val]) => (
+              <div key={label} className="flex flex-col items-center rounded-2xl bg-white/5 px-4 py-4 sm:px-8 sm:py-6 min-w-[70px] sm:min-w-[110px]">
+                <span className="text-[34px] sm:text-[48px] font-light tabular-nums leading-none text-white">
+                  {String(val).padStart(2, '0')}
+                </span>
+                <span className="mt-2 text-[10px] sm:text-[11px] uppercase tracking-widest text-white/40">{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* video embed */}
+        <div className="mx-auto max-w-4xl">
+          <div className="relative w-full overflow-hidden rounded-2xl bg-ae-dark-blue/20" style={{ paddingTop: '56.25%' }}>
+            {isPlaceholder ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-white/10 rounded-2xl">
+                <svg className="h-16 w-16 text-white/15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <p className="text-[14px] text-white/35 text-center px-6">Live stream will appear here on October 28 at 09:30 EET</p>
+              </div>
+            ) : (
+              <iframe
+                className="absolute inset-0 h-full w-full border-0"
+                src={`https://www.youtube.com/embed/${STREAM_ID}?autoplay=0&rel=0&modestbranding=1&playsinline=1`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Aerones Workshop & Demo Day – Live Stream"
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -838,6 +915,7 @@ function App() {
       <Nav onRegister={scrollToRegister} />
       <main>
         <Hero onRegister={scrollToRegister} />
+        <LiveStream />
         <TrustBar />
         <WhatToExpect />
         <Agenda />
