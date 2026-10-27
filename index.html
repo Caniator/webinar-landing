@@ -252,8 +252,17 @@ function LiveStream({ onRegister }) {
   }, []);
 
   return (
-    <section id="overview" className="bg-ae-ink-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-20">
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
+    <section id="overview" className="relative overflow-hidden bg-ae-ink-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-20">
+      {/* Background video */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden" style={{ clipPath:'inset(0 0 20% 0)' }}>
+        <iframe
+          src="https://www.youtube.com/embed/9lB94V5GhaA?autoplay=1&mute=1&loop=1&playlist=9lB94V5GhaA&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&cc_load_policy=0&disablekb=1&fs=0"
+          allow="autoplay; encrypted-media"
+          style={{ position:'absolute', top:'42%', left:'50%', transform:'translate(-50%,-50%)', width:'177.78vh', height:'56.25vw', minWidth:'100%', minHeight:'100%', border:'none' }}
+        />
+      </div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ backgroundColor:'rgba(10,22,42,0.78)' }} />
+      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
 
         {/* Logo + event title */}
         <div className="mb-8 text-center">
@@ -292,7 +301,7 @@ function LiveStream({ onRegister }) {
 
         {/* video embed */}
         <div className="mx-auto max-w-4xl">
-          <div className="relative w-full overflow-hidden rounded-2xl bg-ae-dark-blue/20" style={{ paddingTop: '56.25%' }}>
+          <div className="relative w-full overflow-hidden rounded-2xl bg-ae-ink-900" style={{ paddingTop: '56.25%' }}>
             {isPlaceholder ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-white/10 rounded-2xl">
                 <svg className="h-16 w-16 text-white/15" viewBox="0 0 24 24" fill="currentColor">
