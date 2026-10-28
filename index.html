@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workshop &amp; Demo Day - Aerones HQ · October 28, 2026</title>
+  <title>Workshop &amp; Demo Day - Aerones HQ</title>
   <meta name="description" content="A full day at Aerones HQ in Riga - live hardware demos, hands-on software sessions, and direct access to the team building the platform." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -121,7 +121,7 @@ function CountUp({ target, suffix = '' }) {
 }
 
 /* ── Nav ── */
-function Nav({ onRegister }) {
+function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
@@ -139,11 +139,6 @@ function Nav({ onRegister }) {
             <a key={l} href={h} className="text-[14px] text-ae-ink-700 hover:text-ae-dark-blue transition-colors duration-150">{l}</a>
           ))}
         </nav>
-        <button onClick={onRegister}
-          className="inline-flex items-center gap-2 rounded-full bg-ae-dark-blue px-4 py-2 text-[12px] font-medium text-white transition-colors hover:bg-ae-light-blue sm:px-5 sm:py-2.5 sm:text-[13px]">
-          Register to attend
-          <Icon name="arrow-right" size={13} stroke={2} />
-        </button>
       </div>
     </header>
   );
@@ -151,7 +146,7 @@ function Nav({ onRegister }) {
 
 
 /* ── Hero ── */
-function Hero({ onRegister }) {
+function Hero() {
   return (
     <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white">
       {/* YouTube background video */}
@@ -209,11 +204,6 @@ function Hero({ onRegister }) {
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
-              <button onClick={onRegister}
-                className="ae-save-pulse inline-flex items-center gap-2 rounded-full bg-ae-orange px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#e05510]">
-                Reserve my spot
-                <Icon name="arrow-right" size={14} stroke={2} />
-              </button>
               <a href="#agenda"
                 className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10">
                 See the agenda
@@ -229,9 +219,7 @@ function Hero({ onRegister }) {
               </div>
               <div className="space-y-4">
                 {[
-                  { icon: 'calendar', title: 'October 28, 2026',   sub: '09:00 – 17:00 EET' },
                   { icon: 'map-pin',  title: 'Aerones HQ',          sub: 'Katlakalna iela 11E, Riga, Latvia' },
-                  { icon: 'users',    title: 'Limited capacity',     sub: '~40 participants · Registration required' },
                 ].map(({ icon, title, sub }) => (
                   <div key={title} className="flex items-start gap-3">
                     <Icon name={icon} size={15} stroke={1.75} className="mt-0.5 shrink-0 text-ae-sky-blue" />
@@ -589,9 +577,6 @@ function Speakers() {
             style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
             The team building it, on the floor.
           </h2>
-          <p className="mt-3 text-[15px] text-ae-ink-700">
-            More speakers to be confirmed. Full list shared with registered attendees.
-          </p>
         </div>
 
         {/* Individual cards */}
@@ -640,8 +625,7 @@ function Venue() {
             <div className="mt-8 space-y-4">
               {[
                 { icon: 'map-pin', label: 'Address',       detail: 'Katlakalna iela 11E, Riga, LV-1073, Latvia' },
-                { icon: 'clock',   label: 'Hours',         detail: 'Doors open 08:45. Event 09:00 – 17:00 EET' },
-                { icon: 'wifi',    label: 'Getting there', detail: '~20 min from Riga city centre. On-site parking available. Directions sent on registration confirmation.' },
+                { icon: 'wifi',    label: 'Getting there', detail: '~20 min from Riga city centre. On-site parking available.' },
                 { icon: 'coffee',  label: 'Catering',      detail: 'Morning coffee, lunch, afternoon refreshments included.' },
               ].map(({ icon, label, detail }) => (
                 <div key={label} className="flex items-start gap-3 text-[14px]">
@@ -670,51 +654,29 @@ function Venue() {
   );
 }
 
-/* ── Register ── */
-function Register() {
-  useEffect(() => {
-    if (document.querySelector('script[src="https://webforms.pipedrive.com/f/loader"]')) return;
-    const script = document.createElement('script');
-    script.src = 'https://webforms.pipedrive.com/f/loader';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
+/* ── Thank you ── */
+function ThankYou() {
   return (
-    <section id="register" className="relative overflow-hidden bg-ae-ink-50 text-ae-ink-900">
+    <section id="thank-you" className="relative overflow-hidden bg-ae-ink-50 text-ae-ink-900">
       <div aria-hidden="true"
-        className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[120%] w-[55%] -translate-y-1/2 lg:block"
-        style={{ background: 'radial-gradient(55% 45% at 30% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
-      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_540px] lg:gap-16 lg:items-start">
-          <div>
-            <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
-              style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
-              Reserve your spot at the workshop.
-            </h2>
-            <p className="mt-4 max-w-sm text-[15px] text-ae-ink-700">
-              Free to attend. Capacity is limited to ~40 participants. A confirmation with venue details and preparation notes will be sent on registration.
-            </p>
-            <div className="mt-8 space-y-3 text-[14px] text-ae-ink-700">
-              {[
-                { icon: 'calendar', text: 'October 28, 2026' },
-                { icon: 'clock',    text: '09:00 – 17:00 EET' },
-                { icon: 'map-pin',  text: 'Aerones HQ, Katlakalna iela 11E, Riga' },
-                { icon: 'coffee',   text: 'Lunch & refreshments included' },
-                { icon: 'layers',   text: 'Bring your laptop for hands-on sessions' },
-              ].map(({ icon, text }) => (
-                <div key={text} className="flex items-center gap-3">
-                  <Icon name={icon} size={15} stroke={1.75} className="text-ae-orange shrink-0" />
-                  {text}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div
-            className="pipedriveWebForms"
-            data-pd-webforms="https://webforms.pipedrive.com/f/30XwnKR1Je4YtEmjbNN4enAk3cuNJOuEgI4EpURgUB0RmFLzlCo083gYKujkWhP9x"
-          />
-        </div>
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(55% 60% at 50% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24 text-center">
+        <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
+          style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
+          Thank you for joining us.{' '}
+          <span className="text-ae-orange">See you next time!</span>
+        </h2>
+        <p className="mx-auto mt-4 max-w-xl text-[15px] text-ae-ink-700">
+          Thank you to everyone who came to Aerones HQ for the Annual Workshop &amp; Demo Day.
+          We hope you enjoyed the demos and conversations, and we look forward to welcoming you at the next one.
+        </p>
+        <p className="mt-6 text-[14px] text-ae-ink-700">
+          Questions or follow-ups?{' '}
+          <a href="mailto:info@aerones.com" className="text-ae-dark-blue underline hover:text-ae-light-blue">
+            info@aerones.com
+          </a>
+        </p>
       </div>
     </section>
   );
@@ -744,13 +706,11 @@ function FAQ() {
     { q: 'Is there a cost to attend?',
       a: 'No. The workshop is free to attend. Lunch and refreshments throughout the day are included.' },
     { q: 'How do I get to Aerones HQ?',
-      a: 'Aerones HQ is at Katlakalna iela 11E, Riga, LV-1073 - approximately 20 minutes from Riga city centre by car. On-site parking is available. Detailed directions and public transport options are included in your registration confirmation.' },
+      a: 'Aerones HQ is at Katlakalna iela 11E, Riga, LV-1073 - approximately 20 minutes from Riga city centre by car. On-site parking is available.' },
     { q: 'Will I get hands-on access to the software?',
       a: "Yes. The afternoon includes structured hands-on sessions where you'll work directly in the Customer Portal and data tools using prepared datasets. Bring your laptop." },
-    { q: 'Can I bring colleagues?',
-      a: 'Yes. We encourage teams to attend together. Please register each participant individually so we can manage capacity. Total capacity is ~40 participants.' },
     { q: 'Will sessions be recorded?',
-      a: "The hardware demonstrations and product walkthrough will not be available as recordings. Registered attendees will receive a post-event summary and access to selected materials." },
+      a: "The hardware demonstrations and product walkthrough will not be available as recordings. Attendees will receive a post-event summary and access to selected materials." },
   ];
   return (
     <section id="faq" className="bg-white">
@@ -815,7 +775,7 @@ function Footer() {
           <div>
             <div className="mb-4 text-[11px] font-medium uppercase tracking-eyebrow text-white/35">Event</div>
             <div className="space-y-2 text-[13px] text-white/50">
-              {['Overview','Agenda','Speakers','Venue','Register','FAQ'].map(l =>
+              {['Overview','Agenda','Speakers','Venue','FAQ'].map(l =>
                 <div key={l}><a href={`#${l.toLowerCase()}`} className="hover:text-white/90 transition-colors">{l}</a></div>
               )}
             </div>
@@ -832,18 +792,17 @@ function Footer() {
 
 /* ── App ── */
 function App() {
-  const scrollToRegister = () => document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
   return (
     <div>
-      <Nav onRegister={scrollToRegister} />
+      <Nav />
       <main>
-        <Hero onRegister={scrollToRegister} />
+        <Hero />
+        <ThankYou />
         <TrustBar />
         <WhatToExpect />
         <Agenda />
         <Videos />
         <Speakers />
-        <Register />
         <Venue />
         <FAQ />
       </main>
