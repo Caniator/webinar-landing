@@ -121,7 +121,7 @@ function CountUp({ target, suffix = '' }) {
 }
 
 /* ── Nav ── */
-function Nav() {
+function Nav({ onRegister }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 40);
@@ -139,113 +139,16 @@ function Nav() {
             <a key={l} href={h} className="text-[14px] text-ae-ink-700 hover:text-ae-dark-blue transition-colors duration-150">{l}</a>
           ))}
         </nav>
+        <button onClick={onRegister}
+          className="inline-flex items-center gap-2 rounded-full bg-ae-dark-blue px-4 py-2 text-[12px] font-medium text-white transition-colors hover:bg-ae-light-blue sm:px-5 sm:py-2.5 sm:text-[13px]">
+          Register to attend
+          <Icon name="arrow-right" size={13} stroke={2} />
+        </button>
       </div>
     </header>
   );
 }
 
-
-/* ── Hero ── */
-function Hero() {
-  return (
-    <section id="overview" className="relative overflow-hidden bg-ae-dark-blue text-white">
-      {/* YouTube background video */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <iframe
-          src="https://www.youtube.com/embed/9lB94V5GhaA?autoplay=1&mute=1&loop=1&playlist=9lB94V5GhaA&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&cc_load_policy=0&disablekb=1&fs=0"
-          allow="autoplay; encrypted-media"
-          style={{
-            position: 'absolute',
-            top: '50%', left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '177.78vh',
-            height: '56.25vw',
-            minWidth: '100%',
-            minHeight: '100%',
-            border: 'none',
-          }}
-        />
-      </div>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0"
-        style={{ backgroundColor: 'rgba(13,35,65,0.62)' }} />
-      <div aria-hidden="true"
-        className="pointer-events-none absolute -right-[10%] top-1/2 hidden h-[120%] w-[70%] -translate-y-1/2 lg:block"
-        style={{ background: 'radial-gradient(60% 50% at 50% 50%, rgba(136,205,246,0.14) 0%, transparent 70%)' }} />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-32"
-        style={{ background: 'linear-gradient(to bottom, transparent, rgba(11,26,39,0.98))' }} />
-
-      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
-
-          {/* Left: text */}
-          <div className="flex-1 max-w-[600px]">
-            <div className="mb-6">
-              <img src="assets/photos/Aerones_event_branding_210126_v2-04.png"
-                alt="Aerones Annual Workshop & Demo Day"
-                className="w-auto" style={{ height: 'clamp(64px, 8vw, 100px)' }} />
-            </div>
-
-            <h1 className="mb-5 text-white leading-[1.1] tracking-[-0.02em]"
-              style={{ fontSize: 'clamp(36px, 5vw, 62px)', fontWeight: 300 }}>
-              The robotic solution to severe{' '}
-              <strong style={{ color: '#FC6722', fontWeight: 700, fontStyle: 'normal' }}>Leading Edge Erosion.</strong>
-            </h1>
-
-            <p className="mb-2 leading-relaxed text-white/90 font-medium sm:text-[17px]"
-              style={{ fontSize: 'clamp(15px, 1.6vw, 17px)', maxWidth: '540px' }}>
-              Severe erosion repairs that were once critically dangerous, expensive, and manual -
-              now fast, reliable, and safe.
-            </p>
-
-            <p className="mb-8 leading-relaxed text-white/60 sm:text-[15px]"
-              style={{ fontSize: 'clamp(13px, 1.4vw, 15px)', maxWidth: '520px' }}>
-              Come see the full system live at Aerones HQ in Riga - hardware demonstrations,
-              hands-on software sessions, and direct access to the engineers building it.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <a href="#agenda"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10">
-                See the agenda
-              </a>
-            </div>
-          </div>
-
-          {/* Right: event card */}
-          <div className="hidden lg:block lg:w-[340px] shrink-0">
-            <div className="rounded-2xl border border-white/15 bg-white/10 p-7 backdrop-blur-sm">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#FC6722]/40 bg-[#FC6722]/15 px-3 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-[#FC6722]">
-                In-person event
-              </div>
-              <div className="space-y-4">
-                {[
-                  { icon: 'map-pin',  title: 'Aerones HQ',          sub: 'Katlakalna iela 11E, Riga, Latvia' },
-                ].map(({ icon, title, sub }) => (
-                  <div key={title} className="flex items-start gap-3">
-                    <Icon name={icon} size={15} stroke={1.75} className="mt-0.5 shrink-0 text-ae-sky-blue" />
-                    <div>
-                      <div className="text-[13px] font-medium text-white">{title}</div>
-                      <div className="text-[12px] text-white/50">{sub}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-5 border-t border-white/15 pt-5">
-                <div className="mb-3 text-[11px] font-medium uppercase tracking-eyebrow text-white/40">Format</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {['Live demos','Hands-on sessions','Q&A panel','Networking'].map(t =>
-                    <span key={t} className="rounded-sm bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/70">{t}</span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ── TrustBar ── */
 function TrustBar() {
@@ -916,17 +819,18 @@ function Footer() {
 
 /* ── App ── */
 function App() {
+  const scrollToRegister = () => document.getElementById('thank-you')?.scrollIntoView({ behavior: 'smooth' });
   return (
     <div>
-      <Nav />
+      <Nav onRegister={scrollToRegister} />
       <main>
-        <Hero />
-        <ThankYou />
+        <LiveStream onRegister={scrollToRegister} />
         <TrustBar />
         <WhatToExpect />
         <Agenda />
         <Videos />
         <Speakers />
+        <ThankYou />
         <Venue />
         <FAQ />
       </main>
