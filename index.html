@@ -562,7 +562,6 @@ function Speakers() {
   const people = [
     {
       photo: 'assets/photos/DK.png',
-
       name: 'Dainis Kruze',
       role: 'Co-founder & CEO, Aerones',
       bio: 'Bio coming soon.',
@@ -579,36 +578,68 @@ function Speakers() {
   return (
     <section id="speakers" className="bg-white">
       <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
-        <div className="mb-10 max-w-2xl">
-          <Eyebrow>Speakers</Eyebrow>
-          <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
-            style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
-            The team building it, on the floor.
-          </h2>
-        </div>
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 lg:items-start">
 
-        {/* Individual cards */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {people.map((p, i) =>
-            <article key={i} className="flex flex-col">
-              <div className="mb-4 overflow-hidden rounded-xl bg-ae-ink-100"
-                style={{ aspectRatio: '3/4' }}>
-                <img src={p.photo} alt={p.name}
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: p.objectPos || 'center top' }} />
-              </div>
-              <div className="text-[17px] font-semibold text-ae-ink-900 leading-snug">{p.name}</div>
-              <div className="mb-2 text-[13px] font-medium text-ae-orange">{p.role}</div>
-              <p className="text-[13px] leading-relaxed text-ae-ink-500">{p.bio}</p>
-              {p.tags.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {p.tags.map((t, j) =>
-                    <span key={j} className="rounded-sm bg-ae-ink-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-700 ring-1 ring-ae-ink-200">{t}</span>
+          {/* Left column: Speakers */}
+          <div>
+            <Eyebrow>Speakers</Eyebrow>
+            <h2 className="mt-6 font-bold text-ae-ink-900 leading-[1.15]"
+              style={{ fontSize: 'clamp(26px, 3.2vw, 40px)' }}>
+              The team building it, on the floor.
+            </h2>
+            <div className="mt-10 grid grid-cols-2 gap-8">
+              {people.map((p, i) =>
+                <article key={i} className="flex flex-col">
+                  <div className="mb-4 overflow-hidden rounded-xl bg-ae-ink-100"
+                    style={{ aspectRatio: '3/4' }}>
+                    <img src={p.photo} alt={p.name}
+                      className="h-full w-full object-cover"
+                      style={{ objectPosition: p.objectPos || 'center top' }} />
+                  </div>
+                  <div className="text-[17px] font-semibold text-ae-ink-900 leading-snug">{p.name}</div>
+                  <div className="mb-2 text-[13px] font-medium text-ae-orange">{p.role}</div>
+                  <p className="text-[13px] leading-relaxed text-ae-ink-500">{p.bio}</p>
+                  {p.tags.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {p.tags.map((t, j) =>
+                        <span key={j} className="rounded-sm bg-ae-ink-50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-eyebrow text-ae-ink-700 ring-1 ring-ae-ink-200">{t}</span>
+                      )}
+                    </div>
                   )}
-                </div>
+                </article>
               )}
-            </article>
-          )}
+            </div>
+          </div>
+
+          {/* Right column: Register */}
+          <div id="thank-you">
+            <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
+              style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
+              Reserve your spot at the workshop.
+            </h2>
+            <p className="mt-4 max-w-sm text-[15px] text-ae-ink-700">
+              Free to attend. Capacity is limited to ~40 participants. A confirmation with venue details and preparation notes will be sent on registration.
+            </p>
+            <div className="mt-8 space-y-3 text-[14px] text-ae-ink-700">
+              {[
+                { icon: 'calendar', text: 'November 17, 2026' },
+                { icon: 'clock',    text: '09:00 – 17:00 EET' },
+                { icon: 'map-pin',  text: 'Aerones HQ, Katlakalna iela 11E, Riga' },
+                { icon: 'coffee',   text: 'Lunch & refreshments included' },
+                { icon: 'layers',   text: 'Bring your laptop for hands-on sessions' },
+              ].map(({ icon, text }) => (
+                <div key={text} className="flex items-center gap-3">
+                  <Icon name={icon} size={15} stroke={1.75} className="text-ae-orange shrink-0" />
+                  {text}
+                </div>
+              ))}
+            </div>
+            <div
+              className="mt-8 pipedriveWebForms"
+              data-pd-webforms="https://webforms.pipedrive.com/f/30XwnKR1Je4YtEmjbNN4enAk3cuNJOuEgI4EpURgUB0RmFLzlCo083gYKujkWhP9x"
+            />
+          </div>
+
         </div>
       </div>
     </section>
@@ -662,47 +693,6 @@ function Venue() {
   );
 }
 
-/* ── Thank you ── */
-function ThankYou() {
-  return (
-    <section id="thank-you" className="relative overflow-hidden bg-ae-ink-50 text-ae-ink-900">
-      <div aria-hidden="true"
-        className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[120%] w-[55%] -translate-y-1/2 lg:block"
-        style={{ background: 'radial-gradient(55% 45% at 30% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
-      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_540px] lg:gap-16 lg:items-start">
-          <div>
-            <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
-              style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
-              Reserve your spot at the workshop.
-            </h2>
-            <p className="mt-4 max-w-sm text-[15px] text-ae-ink-700">
-              Free to attend. Capacity is limited to ~40 participants. A confirmation with venue details and preparation notes will be sent on registration.
-            </p>
-            <div className="mt-8 space-y-3 text-[14px] text-ae-ink-700">
-              {[
-                { icon: 'calendar', text: 'November 17, 2026' },
-                { icon: 'clock',    text: '09:00 – 17:00 EET' },
-                { icon: 'map-pin',  text: 'Aerones HQ, Katlakalna iela 11E, Riga' },
-                { icon: 'coffee',   text: 'Lunch & refreshments included' },
-                { icon: 'layers',   text: 'Bring your laptop for hands-on sessions' },
-              ].map(({ icon, text }) => (
-                <div key={text} className="flex items-center gap-3">
-                  <Icon name={icon} size={15} stroke={1.75} className="text-ae-orange shrink-0" />
-                  {text}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div
-            className="pipedriveWebForms"
-            data-pd-webforms="https://webforms.pipedrive.com/f/30XwnKR1Je4YtEmjbNN4enAk3cuNJOuEgI4EpURgUB0RmFLzlCo083gYKujkWhP9x"
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ── FAQ ── */
 function FAQItem({ q, a }) {
@@ -825,7 +815,6 @@ function App() {
         <Agenda />
         <Videos />
         <Speakers />
-        <ThankYou />
         <Venue />
         <FAQ />
       </main>
