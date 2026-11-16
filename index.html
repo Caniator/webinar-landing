@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workshop &amp; Demo Day - Aerones HQ</title>
+  <title>Workshop &amp; Demo Day - Aerones HQ · November 17, 2026</title>
   <meta name="description" content="A full day at Aerones HQ in Riga - live hardware demos, hands-on software sessions, and direct access to the team building the platform." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -324,6 +324,132 @@ function WhatToExpect() {
   );
 }
 
+/* ── Live Stream ── */
+function LiveStream({ onRegister }) {
+  // 09:30 EET on Oct 28 = 07:30 UTC (Latvia is UTC+2 after DST ends Oct 25)
+  const TARGET = new Date('2026-11-17T07:30:00Z');
+  const STREAM_ID = 'PASTE_YOUTUBE_LIVE_ID_HERE'; // ← replace with actual YouTube live stream ID
+  const isPlaceholder = STREAM_ID.startsWith('PASTE');
+
+  function calcTime() {
+    const diff = Math.max(0, TARGET - Date.now());
+    return {
+      days:    Math.floor(diff / 86400000),
+      hours:   Math.floor((diff % 86400000) / 3600000),
+      minutes: Math.floor((diff % 3600000) / 60000),
+      seconds: Math.floor((diff % 60000) / 1000),
+      started: diff <= 0,
+    };
+  }
+
+  const [left, setLeft] = React.useState(calcTime);
+  React.useEffect(() => {
+    const t = setInterval(() => setLeft(calcTime()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section id="overview" className="relative overflow-hidden bg-ae-ink-900 text-white pt-12 pb-16 sm:pt-16 sm:pb-20">
+      {/* Background video */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden" style={{ clipPath:'inset(0 0 20% 0)' }}>
+        <iframe
+          src="https://www.youtube.com/embed/9lB94V5GhaA?autoplay=1&mute=1&loop=1&playlist=9lB94V5GhaA&controls=0&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&playsinline=1&cc_load_policy=0&disablekb=1&fs=0"
+          allow="autoplay; encrypted-media"
+          style={{ position:'absolute', top:'42%', left:'50%', transform:'translate(-50%,-50%)', width:'177.78vh', height:'56.25vw', minWidth:'100%', minHeight:'100%', border:'none' }}
+        />
+      </div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ backgroundColor:'rgba(10,22,42,0.78)' }} />
+      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
+
+        {/* Logo + event title */}
+        <div className="mb-8 text-center">
+          <div className="mb-6">
+            <img src="assets/photos/Aerones_event_branding_210126_v2-04.png"
+              alt="Aerones Annual Workshop &amp; Demo Day"
+              className="mx-auto w-auto" style={{ height: 'clamp(60px, 7vw, 92px)' }} />
+          </div>
+          <h1 className="mb-3 leading-[1.1] tracking-[-0.02em] text-white"
+            style={{ fontSize: 'clamp(28px, 4vw, 54px)', fontWeight: 300 }}>
+            The robotic solution to severe{' '}
+            <strong style={{ color: '#FC6722', fontWeight: 700 }}>Leading Edge Erosion.</strong>
+          </h1>
+          <p className="text-[14px] sm:text-[15px] text-white/50 mt-2">November 17, 2026 · Aerones HQ, Riga</p>
+          <div className="mt-3 flex items-center justify-center gap-2">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Aerones+Workshop+%26+Demo+Day&dates=20261117T070000Z%2F20261117T150000Z&details=A+full+day+at+Aerones+HQ+in+Riga+%E2%80%94+live+hardware+demos%2C+hands-on+software+sessions%2C+and+direct+access+to+the+team+building+the+platform.&location=Aerones+HQ%2C+Katlakalna+iela+11E%2C+Riga%2C+Latvia"
+              target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-white/60 transition-colors hover:bg-white/10 hover:text-white">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Google Calendar
+            </a>
+            <a href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Aerones+Workshop+%26+Demo+Day&startdt=2026-11-17T09%3A00%3A00%2B02%3A00&enddt=2026-11-17T17%3A00%3A00%2B02%3A00&body=A+full+day+at+Aerones+HQ+in+Riga+%E2%80%94+live+hardware+demos%2C+hands-on+software+sessions%2C+and+direct+access+to+the+team+building+the+platform.&location=Aerones+HQ%2C+Katlakalna+iela+11E%2C+Riga%2C+Latvia&path=%2Fcalendar%2Faction%2Fcompose&rru=addevent"
+              target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[12px] font-medium text-white/60 transition-colors hover:bg-white/10 hover:text-white">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Outlook
+            </a>
+          </div>
+        </div>
+
+        {/* Live badge */}
+        <div className="mb-6 flex items-center justify-center gap-2">
+          <span className="ae-dot-pulse inline-block h-2.5 w-2.5 rounded-full bg-red-500" />
+          <span className="text-[12px] font-medium uppercase tracking-[0.18em] text-red-400">Live Stream · 09:30 – 17:00 EET</span>
+        </div>
+
+        {/* countdown */}
+        {!left.started && (
+          <div className="mb-10 flex justify-center gap-3 sm:gap-5">
+            {[['Days', left.days], ['Hours', left.hours], ['Min', left.minutes], ['Sec', left.seconds]].map(([label, val]) => (
+              <div key={label} className="flex flex-col items-center rounded-2xl bg-white/5 px-4 py-4 sm:px-8 sm:py-6 min-w-[70px] sm:min-w-[110px]">
+                <span className="text-[34px] sm:text-[48px] font-light tabular-nums leading-none text-white">
+                  {String(val).padStart(2, '0')}
+                </span>
+                <span className="mt-2 text-[10px] sm:text-[11px] uppercase tracking-widest text-white/40">{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* video embed */}
+        <div className="mx-auto max-w-4xl">
+          <div className="relative w-full overflow-hidden rounded-2xl bg-ae-ink-900" style={{ paddingTop: '56.25%' }}>
+            {isPlaceholder ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 border border-white/10 rounded-2xl">
+                <svg className="h-16 w-16 text-white/15" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <p className="text-[14px] text-white/35 text-center px-6">Live stream will appear here on November 17 at 09:30 EET</p>
+              </div>
+            ) : (
+              <iframe
+                className="absolute inset-0 h-full w-full border-0"
+                src={`https://www.youtube.com/embed/${STREAM_ID}?autoplay=0&rel=0&modestbranding=1&playsinline=1`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Aerones Workshop & Demo Day – Live Stream"
+              />
+            )}
+          </div>
+        </div>
+
+        {/* CTAs */}
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <button onClick={onRegister}
+            className="ae-save-pulse inline-flex items-center gap-2 rounded-full bg-ae-orange px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-[#e05510]">
+            Reserve my spot
+            <Icon name="arrow-right" size={14} stroke={2} />
+          </button>
+          <a href="#agenda"
+            className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10">
+            See the agenda
+          </a>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 /* ── Agenda ── */
 function Agenda() {
   const morning = [
@@ -343,16 +469,14 @@ function Agenda() {
   const afternoon = [
     { time: '13:15', dur: '75 min', title: 'CAT4 Demo Session',                                          badge: 'Live demo' },
     { time: '14:30', dur: '10 min', title: 'CAT4 Q&A Session' },
-    { time: '14:40', dur: '20 min', title: 'Customer Platform, Analytics & Visual Inspection Studio Demonstration', badge: 'Demo' },
-    { time: '15:00', dur: '10 min', title: 'Q&A Session' },
-    { time: '15:10', dur: '40 min', title: 'Rotating Demo Sessions',                                     badge: 'Live demo',
+    { time: '14:40', dur: '40 min', title: 'Rotating Demo Sessions',                                     badge: 'Live demo',
       body: 'Lightning Protection System · Internal Inspections · Drone Inspections · Software Showcase · Hontek Mixing Process & Lab' },
-    { time: '15:50', dur: '30 min', title: 'LER Demo – Part 2: LEP Application and Final Results',       badge: 'Live demo' },
-    { time: '16:20', dur: '10 min', title: 'Q&A and Networking' },
-    { time: '16:30', dur: '5 min',  title: 'Final Thank You' },
-    { time: '16:35', dur: '10 min', title: 'Group Photoshoot' },
-    { time: '16:45', dur: '45 min', title: 'Networking & Entertainment' },
-    { time: '17:30', dur: '30 min', title: 'Departure to Dinner Venue' },
+    { time: '15:20', dur: '30 min', title: 'LER Demo – Part 2: LEP Application and Final Results',       badge: 'Live demo' },
+    { time: '15:50', dur: '10 min', title: 'Q&A and Networking' },
+    { time: '16:00', dur: '5 min',  title: 'Final Thank You' },
+    { time: '16:05', dur: '10 min', title: 'Group Photoshoot' },
+    { time: '16:15', dur: '45 min', title: 'Networking & Entertainment' },
+    { time: '17:00', dur: '30 min', title: 'Departure to Dinner Venue' },
   ];
 
   const evening = [
@@ -553,20 +677,6 @@ function Speakers() {
       bio: 'Bio coming soon.',
       tags: [],
     },
-    {
-      photo: 'assets/photos/ashley crowther.jpg',
-      name: 'Dr. Ashley Crowther',
-      role: 'CCO, Aerones',
-      bio: 'Bio coming soon.',
-      tags: [],
-    },
-    {
-      photo: 'assets/photos/DSC03468.jpg',
-      name: 'Davis Krastiņš',
-      role: 'Head of Sales – EU & APAC, Aerones',
-      bio: 'Bio coming soon.',
-      tags: [],
-    },
   ];
   return (
     <section id="speakers" className="bg-white">
@@ -659,24 +769,38 @@ function ThankYou() {
   return (
     <section id="thank-you" className="relative overflow-hidden bg-ae-ink-50 text-ae-ink-900">
       <div aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{ background: 'radial-gradient(55% 60% at 50% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
-      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24 text-center">
-        <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
-          style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
-          Thank you for joining us.{' '}
-          <span className="text-ae-orange">See you next time!</span>
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-[15px] text-ae-ink-700">
-          Thank you to everyone who came to Aerones HQ for the Annual Workshop &amp; Demo Day.
-          We hope you enjoyed the demos and conversations, and we look forward to welcoming you at the next one.
-        </p>
-        <p className="mt-6 text-[14px] text-ae-ink-700">
-          Questions or follow-ups?{' '}
-          <a href="mailto:info@aerones.com" className="text-ae-dark-blue underline hover:text-ae-light-blue">
-            info@aerones.com
-          </a>
-        </p>
+        className="pointer-events-none absolute -left-[5%] top-1/2 hidden h-[120%] w-[55%] -translate-y-1/2 lg:block"
+        style={{ background: 'radial-gradient(55% 45% at 30% 50%, rgba(28,103,161,0.08) 0%, transparent 70%)' }} />
+      <div className="relative mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-24">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_540px] lg:gap-16 lg:items-start">
+          <div>
+            <h2 className="font-bold text-ae-ink-900 leading-[1.1]"
+              style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
+              Reserve your spot at the workshop.
+            </h2>
+            <p className="mt-4 max-w-sm text-[15px] text-ae-ink-700">
+              Free to attend. Capacity is limited to ~40 participants. A confirmation with venue details and preparation notes will be sent on registration.
+            </p>
+            <div className="mt-8 space-y-3 text-[14px] text-ae-ink-700">
+              {[
+                { icon: 'calendar', text: 'November 17, 2026' },
+                { icon: 'clock',    text: '09:00 – 17:00 EET' },
+                { icon: 'map-pin',  text: 'Aerones HQ, Katlakalna iela 11E, Riga' },
+                { icon: 'coffee',   text: 'Lunch & refreshments included' },
+                { icon: 'layers',   text: 'Bring your laptop for hands-on sessions' },
+              ].map(({ icon, text }) => (
+                <div key={text} className="flex items-center gap-3">
+                  <Icon name={icon} size={15} stroke={1.75} className="text-ae-orange shrink-0" />
+                  {text}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className="pipedriveWebForms"
+            data-pd-webforms="https://webforms.pipedrive.com/f/30XwnKR1Je4YtEmjbNN4enAk3cuNJOuEgI4EpURgUB0RmFLzlCo083gYKujkWhP9x"
+          />
+        </div>
       </div>
     </section>
   );
